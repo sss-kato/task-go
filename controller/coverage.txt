@@ -1,0 +1,7 @@
+mode: set
+task-go/controller/user_controller.go:19.67,21.2 1 0
+task-go/controller/user_controller.go:23.56,27.37 2 1
+task-go/controller/user_controller.go:31.2,32.16 2 1
+task-go/controller/user_controller.go:36.2,36.44 1 1
+task-go/controller/user_controller.go:27.37,29.3 1 1
+task-go/controller/user_controller.go:32.16,34.3 1 1
