@@ -7,7 +7,7 @@ import (
 )
 
 type UserRepositoryIF interface {
-	CreateUser(user *model.User) error
+	RegistUser(user *model.User) error
 	GetUser(user *model.User) error
 }
 
@@ -19,7 +19,7 @@ func NewUserRepository(db *gorm.DB) UserRepositoryIF {
 	return &userRepository{db}
 }
 
-func (ur *userRepository) CreateUser(user *model.User) error {
+func (ur *userRepository) RegistUser(user *model.User) error {
 
 	err := ur.db.Create(user).Error
 

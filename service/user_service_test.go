@@ -14,12 +14,12 @@ func Test_userService_Signup(t *testing.T) {
 	mockCtl := gomock.NewController(t)
 	defer mockCtl.Finish()
 	mock := repository.NewMockUserRepositoryIF(mockCtl)
-	mock.EXPECT().CreateUser(&model.User{Name: "test1", Password: hashed("test1")}).Do(func(user *model.User) {
+	mock.EXPECT().RegistUser(&model.User{Name: "test1", Password: hashed("test1")}).Do(func(user *model.User) {
 		user.Name = "test1"
 		user.Password = hashed("test1")
 		user.ID = 1
 	}).Return(nil)
-	mock.EXPECT().CreateUser(&model.User{Name: "test2", Password: hashed("test2")}).Return(errors.New("test"))
+	mock.EXPECT().RegistUser(&model.User{Name: "test2", Password: hashed("test2")}).Return(errors.New("test"))
 
 	type fields struct {
 		ur repository.UserRepositoryIF

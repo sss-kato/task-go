@@ -34,18 +34,18 @@ func (m *MockUserRepositoryIF) EXPECT() *MockUserRepositoryIFMockRecorder {
 	return m.recorder
 }
 
-// CreateUser mocks base method.
-func (m *MockUserRepositoryIF) CreateUser(user *model.User) error {
+// RegistUser mocks base method.
+func (m *MockUserRepositoryIF) RegistUser(user *model.User) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateUser", user)
+	ret := m.ctrl.Call(m, "RegistUser", user)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// CreateUser indicates an expected call of CreateUser.
-func (mr *MockUserRepositoryIFMockRecorder) CreateUser(user interface{}) *gomock.Call {
+// RegistUser indicates an expected call of RegistUser.
+func (mr *MockUserRepositoryIFMockRecorder) RegistUser(user interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUser", reflect.TypeOf((*MockUserRepositoryIF)(nil).CreateUser), user)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RegistUser", reflect.TypeOf((*MockUserRepositoryIF)(nil).RegistUser), user)
 }
 
 // GetUser mocks base method.
