@@ -23,5 +23,7 @@ jobs:
       - name: Go Version
         run: go version
       
-      - name: master checkout
-        uses: actions/checkout@main
+      - name: Bracnk Checkout
+        uses: actions/checkout@v2
+        with: 
+          ref: ${{ github.ref }}
