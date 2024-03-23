@@ -20,15 +20,21 @@ func NewUserRepository(db *gorm.DB) UserRepositoryIF {
 }
 
 func (ur *userRepository) CreateUser(user *model.User) error {
-	if err := ur.db.Create(user).Error; err != nil {
+
+	err := ur.db.Create(user).Error
+
+	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
 func (ur *userRepository) GetUser(user *model.User) error {
-	if err := ur.db.Where("name=? AND password=?", user.Name, user.Password).First(user).Error; err != nil {
 
+	err := ur.db.Where("name=? AND password=?", user.Name, user.Password).First(user).Error
+
+	if err != nil {
 		return err
 	}
 
