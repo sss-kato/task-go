@@ -24,4 +24,4 @@ jobs:
         run: go version
       
       - name: master checkout
-        run: uses:actions/checkout@main
+        uses: actions/checkout@main
