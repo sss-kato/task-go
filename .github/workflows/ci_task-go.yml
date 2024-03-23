@@ -22,3 +22,6 @@ jobs:
           # cache-dependency-path: go.sum
       - name: Go Version
         run: go version
+      
+      - name: master checkout
+        run: uses:actions/checkout@master
