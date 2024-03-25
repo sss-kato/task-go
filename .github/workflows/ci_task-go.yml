@@ -28,5 +28,5 @@ jobs:
         with: 
           ref: ${{ github.ref }}
       
-      - name: Confirm File
-        run: ls -l
+      - name: Go Build
+        run: go build
