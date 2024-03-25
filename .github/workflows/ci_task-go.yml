@@ -30,3 +30,6 @@ jobs:
       
       - name: Go Build
         run: go build
+
+      - name: Docker Compose Up
+        run: docker-compose up -d
