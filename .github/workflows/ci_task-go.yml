@@ -2,11 +2,11 @@ name: Task-Go
 on: push
 
 env:
-CURRENT_DB_USER: ${{secrets.CURRENT_DB_USER}}
-CURRENT_DB_PW: ${{secrets.CURRENT_DB_PW}}
-CURRENT_DB_HOST: ${{secrets.CURRENT_DB_HOST}}
-CURRENT_DB_PORT: ${{secrets.CURRENT_DB_POST}}
-CURRENT_DB_NAME: ${{secrets.CURRENT_DB_NAME}}
+  CURRENT_DB_USER: ${{secrets.CURRENT_DB_USER}}
+  CURRENT_DB_PW: ${{secrets.CURRENT_DB_PW}}
+  CURRENT_DB_HOST: ${{secrets.CURRENT_DB_HOST}}
+  CURRENT_DB_PORT: ${{secrets.CURRENT_DB_POST}}
+  CURRENT_DB_NAME: ${{secrets.CURRENT_DB_NAME}}
 
 jobs: 
   build: 
