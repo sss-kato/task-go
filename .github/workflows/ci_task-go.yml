@@ -50,5 +50,5 @@ jobs:
           CURRENT_DB_PW: passwd
           # CURRENT_DB_HOST: localhost
           CURRENT_DB_HOST: "127.0.0.1"
-          CURRENT_DB_PORT: "5434"
+          CURRENT_DB_PORT: "5432"
           CURRENT_DB_NAME: user
