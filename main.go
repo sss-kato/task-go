@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"task-go/controller"
 	"task-go/db"
 	"task-go/repository"
@@ -22,4 +23,11 @@ func main() {
 	}
 
 	slice4 := make([]string, 3)
+
+	if true {
+
+		fmt.Print("test")
+	} else {
+		fmt.Print("test")
+	}
 }
