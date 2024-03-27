@@ -13,22 +13,10 @@ jobs:
     name: Go Test
     runs-on: ubuntu-latest
     steps:
-      # - name: Test
-      #   run: sudo add-apt-repository ppa:longsleep/golang-backports
-      # - name: Test2
-      #   run: sudo apt update
-      # - name: Go Download
-      #   run: sudo apt install golang-1.18
-      # - name: Go Version
-      #   run: go version
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
           go-version: '1.18.0'
-          # cache: true
-          # cache-dependency-path: go.sum
-      - name: Go Version
-        run: go version
       
       - name: Bracnk Checkout
         uses: actions/checkout@v2
@@ -40,17 +28,16 @@ jobs:
 
       - name: Docker Compose Up
         run: docker-compose up -d
-      - name: Install golang-migrate CLI
+
+      - name: Install golang-migrate
         run: |
           curl -L https://packagecloud.io/golang-migrate/migrate/gpgkey | sudo apt-key add -
           echo "deb https://packagecloud.io/golang-migrate/migrate/ubuntu/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/migrate.list
           sudo apt-get update
           sudo apt-get install -y migrate
+
       - name: Migration
         run: migrate --path ./migrations --database 'postgresql://${{ env.DB_USER }}:${{ env.DB_PW }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/${{ env.DB_NAME }}?sslmode=disable' -verbose up
-      # - name: Set Env
-      #   run : export CURRENT_DB_USER=user CURRENT_DB_PW=passwd CURRENT_DB_HOST=localhost CURRENT_DB_PORT=5434 CURRENT_DB_NAME=user
+
       - name: Go Run TestCode
-        run: go test -v ./...
-        # run: go run ./migrate/migrate.go
-        # run: cd ./repository;go test -run Test_userRepository_RegistUser
+        run: go test -v  -cover ./...
