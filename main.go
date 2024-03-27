@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"task-go/controller"
 	"task-go/db"
 	"task-go/repository"
@@ -22,10 +21,4 @@ func main() {
 		e.Logger.Fatal(err)
 	}
 
-	if true {
-
-		fmt.Print("test")
-	} else {
-		fmt.Print("test")
-	}
 }
