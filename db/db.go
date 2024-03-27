@@ -27,6 +27,7 @@ func NewDB() *gorm.DB {
 		log.Fatal(err)
 	}
 	fmt.Println("Connection Success")
+	dd
 	return db
 
 }

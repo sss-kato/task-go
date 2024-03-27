@@ -20,4 +20,6 @@ func main() {
 	if err != nil {
 		e.Logger.Fatal(err)
 	}
+
+	slice4 := make([]string, 3)
 }
