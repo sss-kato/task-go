@@ -19,6 +19,8 @@ func NewDB() *gorm.DB {
 		os.Getenv("CURRENT_DB_NAME"),
 	)
 
+	fmt.Println(url)
+
 	db, err := gorm.Open(postgres.Open(url), &gorm.Config{})
 
 	if err != nil {
