@@ -47,7 +47,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y migrate
       - name: Migration
-        run: migrate --path ./migrations --database 'postgresql://'{{env.DB_USER}}':'{{env.DB_PW}}’@'{{env.DB_HOST}}’:'{{env.DB_PORT}}’/user?sslmode=disable' -verbose up
+        run: migrate --path ./migrations --database 'postgresql://${{ env.DB_USER }}:${{ env.DB_PW }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/${{ env.DB_NAME }}?sslmode=disable' -verbose up
       # - name: Set Env
       #   run : export CURRENT_DB_USER=user CURRENT_DB_PW=passwd CURRENT_DB_HOST=localhost CURRENT_DB_PORT=5434 CURRENT_DB_NAME=user
       # - name: Go Run TestCode
