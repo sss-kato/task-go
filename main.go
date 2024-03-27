@@ -22,8 +22,6 @@ func main() {
 		e.Logger.Fatal(err)
 	}
 
-	slice4 := make([]string, 3)
-
 	if true {
 
 		fmt.Print("test")
