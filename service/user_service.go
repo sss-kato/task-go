@@ -25,7 +25,7 @@ func NewUserService(ur repository.UserRepositoryIF) UserServiceIF {
 
 func (us *userService) Signup(user *model.User) (model.UserResponse, error) {
 
-	newUser := model.User{Name: user.Name, Password: hashed(user.Password)}
+	newUser := model.User{Name: user.Name, Mailadress: user.Mailadress, Password: hashed(user.Password)}
 	err := us.ur.RegistUser(&newUser)
 	if err != nil {
 		return model.UserResponse{}, err
