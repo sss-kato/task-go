@@ -12,11 +12,11 @@ import (
 func NewDB() *gorm.DB {
 
 	url := fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
-		os.Getenv("CURRENT_DB_USER"),
-		os.Getenv("CURRENT_DB_PW"),
-		os.Getenv("CURRENT_DB_HOST"),
-		os.Getenv("CURRENT_DB_PORT"),
-		os.Getenv("CURRENT_DB_NAME"),
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PW"),
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_PORT"),
+		os.Getenv("DB_NAME"),
 	)
 
 	fmt.Println(url)

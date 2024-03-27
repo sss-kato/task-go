@@ -22,8 +22,8 @@ func Test_userRepository_RegistUser(t *testing.T) {
 		wantErr bool // エラーを返すことを確認する場合はtrue
 	}{
 		// TODO: Add test cases.
-		{"case1", fields{db.NewDB()}, args{&model.User{Name: "test4", Password: "test4"}}, false},
-		{"case2", fields{db.NewDB()}, args{&model.User{Name: "test4", Password: "test4"}}, true},
+		{"case1", fields{db.NewDB()}, args{&model.User{Name: "test4", Mailadress: "test4@gmail", Password: "test4"}}, false},
+		{"case2", fields{db.NewDB()}, args{&model.User{Name: "test4", Mailadress: "test4@gmail", Password: "test4"}}, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
