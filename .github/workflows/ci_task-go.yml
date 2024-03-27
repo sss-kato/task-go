@@ -5,7 +5,7 @@ env:
   DB_USER: ${{secrets.DB_USER}}
   DB_PW: ${{secrets.DB_PW}}
   DB_HOST: ${{secrets.DB_HOST}}
-  DB_PORT: ${{secrets.DB_POST}}
+  DB_PORT: ${{secrets.DB_PORT}}
   DB_NAME: ${{secrets.DB_NAME}}
 
 jobs: 
@@ -46,6 +46,8 @@ jobs:
           echo "deb https://packagecloud.io/golang-migrate/migrate/ubuntu/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/migrate.list
           sudo apt-get update
           sudo apt-get install -y migrate
+      - name: Migration
+        run: migrate --path ./migrations --database 'postgresql://'{{env.DB_USER}}':'{{env.DB_PW}}’@'{{env.DB_HOST}}’:'{{env.DB_PORT}}’/user?sslmode=disable' -verbose up
       # - name: Set Env
       #   run : export CURRENT_DB_USER=user CURRENT_DB_PW=passwd CURRENT_DB_HOST=localhost CURRENT_DB_PORT=5434 CURRENT_DB_NAME=user
       # - name: Go Run TestCode
