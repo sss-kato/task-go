@@ -44,7 +44,8 @@ jobs:
       #   run : export CURRENT_DB_USER=user CURRENT_DB_PW=passwd CURRENT_DB_HOST=localhost CURRENT_DB_PORT=5434 CURRENT_DB_NAME=user
       - name: Go Run TestCode
         # run: go test -v ./...
-        run: go run ./migrate/migrate.go
+        # run: go run ./migrate/migrate.go
+        run: cd ./repository;go test -run Test_userRepository_RegistUser
         env:
           CURRENT_DB_USER: user
           CURRENT_DB_PW: passwd
