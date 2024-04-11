@@ -28,6 +28,14 @@ func (uc *userController) Signup(c echo.Context) error {
 		return err
 	}
 
+	if err := user.ValidateName(); err != nil {
+		return err
+	}
+
+	if err := user.ValidatePassword(); err != nil {
+		return err
+	}
+
 	userRes, err := uc.us.Signup(user)
 	if err != nil {
 		return err
