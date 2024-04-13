@@ -2,6 +2,7 @@ package model
 
 import (
 	"errors"
+	"net/mail"
 	"time"
 )
 
@@ -40,5 +41,27 @@ func (u *User) ValidatePassword() error {
 
 		return errors.New("password must be at least five characters long.")
 	}
+	return nil
+}
+
+func (u *User) ValidateMailAdress() error {
+
+	lengh := len(u.Mailadress)
+
+	if lengh > 30 {
+
+		return errors.New("password must be thirty characters or fewer.")
+
+	} else if lengh < 5 {
+
+		return errors.New("password must be at least five characters long.")
+	}
+
+	_, err := mail.ParseAddress(u.Mailadress)
+
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
