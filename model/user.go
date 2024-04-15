@@ -56,7 +56,7 @@ func (u *User) ValidateMailAdress() error {
 
 		return errors.New("password must be at least five characters long.")
 	}
-
+	//  RFC 5322の観点でチェック
 	_, err := mail.ParseAddress(u.Mailadress)
 
 	if err != nil {
