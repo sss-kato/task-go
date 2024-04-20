@@ -2,7 +2,7 @@ package controller
 
 import (
 	"net/http"
-	"task-go/model"
+	"task-go/domain"
 	"task-go/service"
 
 	"github.com/labstack/echo/v4"
@@ -22,9 +22,15 @@ func NewUserController(us service.UserServiceIF) UserControllerIF {
 
 func (uc *userController) Signup(c echo.Context) error {
 
-	user := &model.User{}
+	// user := &model.User{}
 
-	if err := c.Bind(user); err != nil {
+	name := c.FormValue("name")
+	pw := c.FormValue("password")
+	mail := c.FormValue("mailadress")
+
+	user, err := domain.NewUser(name, pw, mail)
+
+	if err != nil {
 		return err
 	}
 

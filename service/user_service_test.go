@@ -3,7 +3,7 @@ package service
 import (
 	"errors"
 	"reflect"
-	"task-go/model"
+	"task-go/domain"
 	"task-go/repository"
 	"testing"
 
@@ -11,33 +11,34 @@ import (
 )
 
 func Test_userService_Signup(t *testing.T) {
+	testUser1, _ := domain.NewUser("test11", "test11", "test11@gmail")
+	testUser2, _ := domain.NewUser("test11", "test11", "test11@gmail")
+
 	mockCtl := gomock.NewController(t)
 	defer mockCtl.Finish()
 	mock := repository.NewMockUserRepositoryIF(mockCtl)
-	mock.EXPECT().RegistUser(&model.User{Name: "test1", Mailadress: "test1@gmail.com", Password: hashed("test1")}).Do(func(user *model.User) {
+	mock.EXPECT().RegistUser(testUser1).Do(func(user *domain.User) {
 		user.Name = "test1"
-		user.Mailadress = "test1@gmail"
-		user.Password = hashed("test1")
 		user.ID = 1
 	}).Return(nil)
-	mock.EXPECT().RegistUser(&model.User{Name: "test2", Mailadress: "test2@gmail.com", Password: hashed("test2")}).Return(errors.New("test"))
+	mock.EXPECT().RegistUser(testUser2).Return(errors.New("test"))
 
 	type fields struct {
 		ur repository.UserRepositoryIF
 	}
 	type args struct {
-		user *model.User
+		user *domain.User
 	}
 	tests := []struct {
 		name    string
 		fields  fields
 		args    args
-		want    model.UserResponse
+		want    domain.UserResponse
 		wantErr bool
 	}{
 		// TODO: Add test cases.
-		{"case1", fields{mock}, args{&model.User{Name: "test1", Mailadress: "test1@gmail.com", Password: "test1"}}, model.UserResponse{ID: 1, Name: "test1"}, false},
-		{"case2", fields{mock}, args{&model.User{Name: "test2", Mailadress: "test2@gmail.com", Password: "test2"}}, model.UserResponse{}, true},
+		{"case1", fields{mock}, args{testUser1}, domain.UserResponse{ID: 1, Name: "test1"}, false},
+		{"case2", fields{mock}, args{testUser2}, domain.UserResponse{}, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

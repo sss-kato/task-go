@@ -6,7 +6,7 @@ package repository
 
 import (
 	reflect "reflect"
-	model "task-go/model"
+	domain "task-go/domain"
 
 	gomock "github.com/golang/mock/gomock"
 )
@@ -35,7 +35,7 @@ func (m *MockUserRepositoryIF) EXPECT() *MockUserRepositoryIFMockRecorder {
 }
 
 // RegistUser mocks base method.
-func (m *MockUserRepositoryIF) RegistUser(user *model.User) error {
+func (m *MockUserRepositoryIF) RegistUser(user *domain.User) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "RegistUser", user)
 	ret0, _ := ret[0].(error)
@@ -49,7 +49,7 @@ func (mr *MockUserRepositoryIFMockRecorder) RegistUser(user interface{}) *gomock
 }
 
 // GetUser mocks base method.
-func (m *MockUserRepositoryIF) GetUser(user *model.User) error {
+func (m *MockUserRepositoryIF) GetUser(user *domain.User) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUser", user)
 	ret0, _ := ret[0].(error)

@@ -6,8 +6,7 @@ package service
 
 import (
 	reflect "reflect"
-	model "task-go/model"
-
+	"task-go/domain"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -35,7 +34,7 @@ func (m *MockUserServiceIF) EXPECT() *MockUserServiceIFMockRecorder {
 }
 
 // Login mocks base method.
-func (m *MockUserServiceIF) Login(user *model.User) (string, error) {
+func (m *MockUserServiceIF) Login(user *domain.User) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Login", user)
 	ret0, _ := ret[0].(string)
@@ -50,10 +49,10 @@ func (mr *MockUserServiceIFMockRecorder) Login(user interface{}) *gomock.Call {
 }
 
 // Signup mocks base method.
-func (m *MockUserServiceIF) Signup(user *model.User) (model.UserResponse, error) {
+func (m *MockUserServiceIF) Signup(user *domain.User) (domain.UserResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Signup", user)
-	ret0, _ := ret[0].(model.UserResponse)
+	ret0, _ := ret[0].(domain.UserResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
