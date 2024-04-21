@@ -2,7 +2,7 @@ package repository
 
 import (
 	"task-go/db"
-	"task-go/domain"
+	"task-go/dto"
 	"testing"
 
 	"gorm.io/gorm"
@@ -15,14 +15,14 @@ func Test_userRepository_RegistUser(t *testing.T) {
 	// mock := domain.NewMockUserIF(mockCtl)
 	// mock.EXPECT()
 
-	testUser1, _ := domain.NewUser("test11", "test11", "test11@gmail")
-	testUser2, _ := domain.NewUser("test11", "test11", "test11@gmail")
+	testUserDto1 := &dto.UserDto{Name: "test101", Mailadress: "test101@gmail.com", Password: "test100"}
+	testUserDto2 := &dto.UserDto{Name: "test101", Mailadress: "test101@gmail.com", Password: "test100"}
 
 	type fields struct {
 		db *gorm.DB
 	}
 	type args struct {
-		user *domain.UserIF
+		user *dto.UserDto
 	}
 	tests := []struct {
 		name    string
@@ -31,8 +31,8 @@ func Test_userRepository_RegistUser(t *testing.T) {
 		wantErr bool // エラーを返すことを確認する場合はtrue
 	}{
 		// TODO: Add test cases.
-		{"case1", fields{db.NewDB()}, args{&testUser1}, false},
-		{"case2", fields{db.NewDB()}, args{&testUser2}, true},
+		{"case1", fields{db.NewDB()}, args{testUserDto1}, false},
+		{"case2", fields{db.NewDB()}, args{testUserDto2}, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

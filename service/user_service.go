@@ -2,12 +2,13 @@ package service
 
 import (
 	"task-go/domain"
+	"task-go/dto"
 	"task-go/repository"
 )
 
 type UserServiceIF interface {
-	Signup(user *domain.User) (domain.UserResponse, error)
-	Login(user *domain.User) (string, error)
+	Signup(user domain.UserIF) (domain.UserResponse, error)
+	Login(user domain.UserIF) (string, error)
 }
 
 type userService struct {
@@ -18,19 +19,20 @@ func NewUserService(ur repository.UserRepositoryIF) UserServiceIF {
 	return &userService{ur}
 }
 
-func (us *userService) Signup(user *domain.User) (domain.UserResponse, error) {
+func (us *userService) Signup(user domain.UserIF) (domain.UserResponse, error) {
 
-	// newUser := model.User{Name: user.Name, Mailadress: user.Mailadress, Password: hashed(user.Password)}
-	err := us.ur.RegistUser(user)
+	ud := &dto.UserDto{Name: user.GetName(), Mailadress: user.GetMailAdress(), Password: user.GetPassWord()}
+	err := us.ur.RegistUser(ud)
+
 	if err != nil {
 		return domain.UserResponse{}, err
 	}
 
-	resUser := domain.UserResponse{ID: user.ID, Name: user.Name}
+	resUser := domain.UserResponse{ID: ud.ID, Name: ud.Name}
 	return resUser, nil
 }
 
-func (us *userService) Login(user *domain.User) (string, error) {
+func (us *userService) Login(user domain.UserIF) (string, error) {
 	// user.Password = hashed(user.Password)
 
 	// err := us.ur.GetUser(user)
@@ -40,11 +42,3 @@ func (us *userService) Login(user *domain.User) (string, error) {
 	token := "test"
 	return token, nil
 }
-
-// func hashed(p string) string {
-// 	salt := base64.StdEncoding.EncodeToString([]byte(p))
-
-// 	key := pbkdf2.Key([]byte(p), []byte(salt), 10, 10, sha256.New)
-
-// 	return hex.EncodeToString(key[:])
-// }

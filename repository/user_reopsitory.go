@@ -1,14 +1,14 @@
 package repository
 
 import (
-	"task-go/domain"
+	"task-go/dto"
 
 	"gorm.io/gorm"
 )
 
 type UserRepositoryIF interface {
-	RegistUser(user *domain.UserIF) error
-	GetUser(user *domain.User) error
+	RegistUser(ud *dto.UserDto) error
+	GetUser(user *dto.UserDto) error
 }
 
 type userRepository struct {
@@ -19,9 +19,9 @@ func NewUserRepository(db *gorm.DB) UserRepositoryIF {
 	return &userRepository{db}
 }
 
-func (ur *userRepository) RegistUser(user *domain.UserIF) error {
+func (ur *userRepository) RegistUser(ud *dto.UserDto) error {
 
-	err := ur.db.Create(user).Error
+	err := ur.db.Create(ud).Error
 
 	if err != nil {
 		return err
@@ -30,7 +30,7 @@ func (ur *userRepository) RegistUser(user *domain.UserIF) error {
 	return nil
 }
 
-func (ur *userRepository) GetUser(user *domain.User) error {
+func (ur *userRepository) GetUser(user *dto.UserDto) error {
 
 	// err := ur.db.Where("name=? AND password=?", user.Name, user.Password).First(user).Error
 

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"reflect"
 	"task-go/domain"
+	"task-go/dto"
 	"task-go/repository"
 	"testing"
 
@@ -11,13 +12,13 @@ import (
 )
 
 func Test_userService_Signup(t *testing.T) {
-	testUser1, _ := domain.NewUser("test11", "test11", "test11@gmail")
-	testUser2, _ := domain.NewUser("test11", "test11", "test11@gmail")
+	testUser1 := domain.NewUser("test11", "test11", "test11@gmail")
+	testUser2 := domain.NewUser("test11", "test11", "test11@gmail")
 
 	mockCtl := gomock.NewController(t)
 	defer mockCtl.Finish()
 	mock := repository.NewMockUserRepositoryIF(mockCtl)
-	mock.EXPECT().RegistUser(testUser1).Do(func(user *domain.User) {
+	mock.EXPECT().RegistUser(testUser1).Do(func(user *dto.UserDto) {
 		user.Name = "test1"
 		user.ID = 1
 	}).Return(nil)
@@ -27,7 +28,7 @@ func Test_userService_Signup(t *testing.T) {
 		ur repository.UserRepositoryIF
 	}
 	type args struct {
-		user *domain.User
+		user domain.UserIF
 	}
 	tests := []struct {
 		name    string

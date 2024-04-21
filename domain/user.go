@@ -6,47 +6,35 @@ import (
 	"encoding/hex"
 	"errors"
 	"net/mail"
-	"time"
 
 	"golang.org/x/crypto/pbkdf2"
 )
 
 type UserIF interface {
+	ValidateName() error
+	ValidatePassword() error
+	ValidateMailAdress() error
+	HashedPassword()
+
+	GetName() string
+	GetMailAdress() string
+	GetPassWord() string
 }
 
-type User struct {
-	ID         uint
-	Name       string
-	Password   string
-	Mailadress string
-	CreatedAt  time.Time
-	UpdatedAt  time.Time
+type user struct {
+	name       string
+	password   string
+	mailadress string
 }
 
-func NewUser(name string, pw string, mail string) (UserIF, error) {
+func NewUser(nm string, pw string, ma string) UserIF {
 
-	nameErr := validateName(name)
-	if nameErr != nil {
-		return nil, nameErr
-	}
-
-	pwErr := validatePassword(pw)
-	if pwErr != nil {
-		return nil, pwErr
-	}
-
-	mailErr := validateMailAdress(mail)
-	if mailErr != nil {
-		return nil, mailErr
-	}
-	hashedPw := hashedPassword(pw)
-
-	return &User{Name: name, Password: hashedPw, Mailadress: mail}, nil
+	return &user{name: nm, password: pw, mailadress: ma}
 }
 
-func validateName(name string) error {
+func (u *user) ValidateName() error {
 
-	length := len(name)
+	length := len(u.name)
 
 	if length > 15 {
 		return errors.New("username must be fifteen characters or fewer.")
@@ -58,9 +46,9 @@ func validateName(name string) error {
 	return nil
 }
 
-func validatePassword(pw string) error {
+func (u *user) ValidatePassword() error {
 
-	length := len(pw)
+	length := len(u.password)
 
 	if length > 15 {
 
@@ -73,9 +61,9 @@ func validatePassword(pw string) error {
 	return nil
 }
 
-func validateMailAdress(ma string) error {
+func (u *user) ValidateMailAdress() error {
 
-	lengh := len(ma)
+	lengh := len(u.mailadress)
 
 	if lengh > 30 {
 
@@ -86,7 +74,7 @@ func validateMailAdress(ma string) error {
 		return errors.New("password must be at least five characters long.")
 	}
 	//  RFC 5322の観点でチェック
-	_, err := mail.ParseAddress(ma)
+	_, err := mail.ParseAddress(u.mailadress)
 
 	if err != nil {
 		return err
@@ -95,8 +83,20 @@ func validateMailAdress(ma string) error {
 	return nil
 }
 
-func hashedPassword(pw string) string {
-	salt := base64.StdEncoding.EncodeToString([]byte(pw))
-	key := pbkdf2.Key([]byte(pw), []byte(salt), 1000, 5, sha256.New)
-	return hex.EncodeToString(key[:])
+func (u *user) HashedPassword() {
+	salt := base64.StdEncoding.EncodeToString([]byte(u.password))
+	key := pbkdf2.Key([]byte(u.password), []byte(salt), 1000, 5, sha256.New)
+	u.password = hex.EncodeToString(key[:])
+}
+
+func (u *user) GetName() string {
+	return u.name
+}
+
+func (u *user) GetMailAdress() string {
+	return u.mailadress
+}
+
+func (u *user) GetPassWord() string {
+	return u.password
 }
