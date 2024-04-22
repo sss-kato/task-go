@@ -28,19 +28,21 @@ func (uc *userController) Signup(c echo.Context) error {
 	pw := c.FormValue("password")
 	mail := c.FormValue("mailadress")
 
-	user, err := domain.NewUser(name, pw, mail)
+	user := domain.NewUser(name, pw, mail)
 
-	if err != nil {
-		return err
+	nameErr := user.ValidateName()
+	if nameErr != nil {
+		return nameErr
+	}
+	pwErr := user.ValidatePassword()
+	if pwErr != nil {
+		return pwErr
 	}
 
-	// if err := user.ValidateName(); err != nil {
-	// 	return err
-	// }
-
-	// if err := user.ValidatePassword(); err != nil {
-	// 	return err
-	// }
+	mailErr := user.ValidateMailAdress()
+	if mailErr != nil {
+		return mailErr
+	}
 
 	userRes, err := uc.us.Signup(user)
 	if err != nil {
