@@ -12,17 +12,21 @@ import (
 )
 
 func Test_userService_Signup(t *testing.T) {
-	testUser1 := domain.NewUser("test11", "test11", "test11@gmail")
-	testUser2 := domain.NewUser("test11", "test11", "test11@gmail")
-
+	mockUser1 := domain.NewUser("test11", "test11", "test11@gmail")
+	mockUser1.HashedPassword()
+	ud1 := &dto.UserDto{Name: mockUser1.GetName(), Password: mockUser1.GetPassWord(), Mailadress: mockUser1.GetMailAdress()}
 	mockCtl := gomock.NewController(t)
 	defer mockCtl.Finish()
 	mock := repository.NewMockUserRepositoryIF(mockCtl)
-	mock.EXPECT().RegistUser(testUser1).Do(func(user *dto.UserDto) {
+	mock.EXPECT().RegistUser(ud1).Do(func(user *dto.UserDto) {
 		user.Name = "test1"
 		user.ID = 1
 	}).Return(nil)
-	mock.EXPECT().RegistUser(testUser2).Return(errors.New("test"))
+
+	mockUser2 := domain.NewUser("test11", "test11", "test11@gmail")
+	mockUser2.HashedPassword()
+	ud2 := &dto.UserDto{Name: mockUser2.GetName(), Password: mockUser2.GetPassWord(), Mailadress: mockUser2.GetMailAdress()}
+	mock.EXPECT().RegistUser(ud2).Return(errors.New("test"))
 
 	type fields struct {
 		ur repository.UserRepositoryIF
@@ -38,8 +42,8 @@ func Test_userService_Signup(t *testing.T) {
 		wantErr bool
 	}{
 		// TODO: Add test cases.
-		{"case1", fields{mock}, args{testUser1}, domain.UserResponse{ID: 1, Name: "test1"}, false},
-		{"case2", fields{mock}, args{testUser2}, domain.UserResponse{}, true},
+		{"case1", fields{mock}, args{domain.NewUser("test11", "test11", "test11@gmail")}, domain.UserResponse{ID: 1, Name: "test1"}, false},
+		{"case2", fields{mock}, args{domain.NewUser("test11", "test11", "test11@gmail")}, domain.UserResponse{}, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
