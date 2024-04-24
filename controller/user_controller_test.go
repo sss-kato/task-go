@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"strings"
+	"task-go/domain"
 	"task-go/service"
 	"testing"
 
@@ -18,17 +19,17 @@ func Test_userController_Signup(t *testing.T) {
 	mockCtl := gomock.NewController(t)
 	defer mockCtl.Finish()
 	mock := service.NewMockUserServiceIF(mockCtl)
-	mock.EXPECT().Signup(&model.User{Name: "test", Password: "test"}).Return(model.UserResponse{ID: 1, Name: "test"}, nil)
-	mock.EXPECT().Signup(&model.User{Name: "test2", Password: "test2"}).Return(model.UserResponse{}, errors.New("error"))
+	mock.EXPECT().Signup(domain.NewUser("test", "test", "test")).Return(domain.UserResponse{ID: 1, Name: "test"}, nil)
+	mock.EXPECT().Signup(domain.NewUser("test2", "test2", "test2")).Return(domain.UserResponse{}, errors.New("error"))
 
 	e := echo.New()
-	req := httptest.NewRequest(http.MethodPost, "/signup", strings.NewReader(`{"name":"test","password":"test"}`))
+	req := httptest.NewRequest(http.MethodPost, "/signup", strings.NewReader(`{"name":"test","password":"test","mailadress":"test"}`))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
 	e2 := echo.New()
-	req2 := httptest.NewRequest(http.MethodPost, "/signup", strings.NewReader(`{"name":"test2","password":"test2"}`))
+	req2 := httptest.NewRequest(http.MethodPost, "/signup", strings.NewReader(`{"name":"test2","password":"test2","mailadress":"test2"}`))
 	req2.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec2 := httptest.NewRecorder()
 	c2 := e2.NewContext(req2, rec2)

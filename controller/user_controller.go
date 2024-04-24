@@ -20,20 +20,31 @@ func NewUserController(us service.UserServiceIF) UserControllerIF {
 	return &userController{us}
 }
 
+type UserRequest struct {
+	Name       string `json:"name"`
+	Password   string `json:"password"`
+	MailAdress string `json:"mailadress"`
+}
+
 func (uc *userController) Signup(c echo.Context) error {
 
-	// user := &model.User{}
+	// userTest := struct {
+	// 	Name       string
+	// 	Password   string
+	// 	MailAdress string
+	// }{}
 
-	name := c.FormValue("name")
-	pw := c.FormValue("password")
-	mail := c.FormValue("mailadress")
-
-	user := domain.NewUser(name, pw, mail)
+	userReq := new(UserRequest)
+	if err := c.Bind(userReq); err != nil {
+		return err
+	}
+	user := domain.NewUser(userReq.Name, userReq.Password, userReq.Password)
 
 	nameErr := user.ValidateName()
 	if nameErr != nil {
 		return nameErr
 	}
+
 	pwErr := user.ValidatePassword()
 	if pwErr != nil {
 		return pwErr

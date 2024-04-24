@@ -34,7 +34,7 @@ func (m *MockUserServiceIF) EXPECT() *MockUserServiceIFMockRecorder {
 }
 
 // Login mocks base method.
-func (m *MockUserServiceIF) Login(user *domain.UserIF) (string, error) {
+func (m *MockUserServiceIF) Login(user domain.UserIF) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Login", user)
 	ret0, _ := ret[0].(string)
@@ -49,7 +49,7 @@ func (mr *MockUserServiceIFMockRecorder) Login(user interface{}) *gomock.Call {
 }
 
 // Signup mocks base method.
-func (m *MockUserServiceIF) Signup(user *domain.UserIF) (domain.UserResponse, error) {
+func (m *MockUserServiceIF) Signup(user domain.UserIF) (domain.UserResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Signup", user)
 	ret0, _ := ret[0].(domain.UserResponse)
