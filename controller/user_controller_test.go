@@ -23,7 +23,7 @@ func Test_userController_Signup(t *testing.T) {
 	// test case1
 	mock.EXPECT().Signup(domain.NewUser("test1", "test1", "test1@gmail.com")).Return(domain.UserResponse{ID: 1, Name: "test"}, nil)
 	e := echo.New()
-	req1 := httptest.NewRequest(http.MethodPost, "/signup", strings.NewReader(`{"name":"test1","password":"test1","mailadress":"test1@gmail.com"}`))
+	req1 := httptest.NewRequest(http.MethodPost, "/signup", strings.NewReader(`{"name":"<test1","password":"test1","mailadress":"test1@gmail.com"}`))
 	req1.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec1 := httptest.NewRecorder()
 	c := e.NewContext(req1, rec1)
