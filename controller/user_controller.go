@@ -21,43 +21,42 @@ func NewUserController(us service.UserServiceIF) UserControllerIF {
 }
 
 type UserRequest struct {
-	Name       string `json:"name"`
-	Password   string `json:"password"`
-	MailAdress string `json:"mailadress"`
+	Name       string
+	Password   string
+	MailAdress string
 }
 
 func (uc *userController) Signup(c echo.Context) error {
 
-	// userTest := struct {
-	// 	Name       string
-	// 	Password   string
-	// 	MailAdress string
-	// }{}
-
-	userReq := new(UserRequest)
+	userReq := &UserRequest{}
 	if err := c.Bind(userReq); err != nil {
 		return err
 	}
-	user := domain.NewUser(userReq.Name, userReq.Password, userReq.Password)
+
+	user := domain.NewUser(userReq.Name, userReq.Password, userReq.MailAdress)
 
 	nameErr := user.ValidateName()
 	if nameErr != nil {
-		return nameErr
+		errMsg := &domain.Message{Message: nameErr.Error()}
+		return c.JSON(http.StatusBadRequest, errMsg)
 	}
 
 	pwErr := user.ValidatePassword()
 	if pwErr != nil {
-		return pwErr
+		errMsg := &domain.Message{Message: pwErr.Error()}
+		return c.JSON(http.StatusBadRequest, errMsg)
 	}
 
 	mailErr := user.ValidateMailAdress()
 	if mailErr != nil {
-		return mailErr
+		errMsg := &domain.Message{Message: mailErr.Error()}
+		return c.JSON(http.StatusBadRequest, errMsg)
 	}
 
 	userRes, err := uc.us.Signup(user)
 	if err != nil {
-		return err
+		errMsg := &domain.Message{Message: "signup failed."}
+		return c.JSON(http.StatusInternalServerError, errMsg)
 	}
 
 	return c.JSON(http.StatusCreated, userRes)

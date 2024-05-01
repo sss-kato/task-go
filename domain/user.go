@@ -67,17 +67,18 @@ func (u *user) ValidateMailAdress() error {
 
 	if lengh > 30 {
 
-		return errors.New("password must be thirty characters or fewer.")
+		return errors.New("mailadress must be thirty characters or fewer.")
 
 	} else if lengh < 5 {
 
-		return errors.New("password must be at least five characters long.")
+		return errors.New("mailadress must be at least five characters long.")
 	}
 	//  RFC 5322の観点でチェック
 	_, err := mail.ParseAddress(u.mailadress)
 
 	if err != nil {
-		return err
+
+		return errors.New("mailadress is invalid.")
 	}
 
 	return nil
