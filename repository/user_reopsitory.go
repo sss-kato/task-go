@@ -2,6 +2,7 @@ package repository
 
 import (
 	"task-go/dto"
+	"task-go/util"
 
 	"gorm.io/gorm"
 )
@@ -24,7 +25,7 @@ func (ur *userRepository) RegistUser(ud *dto.UserDto) error {
 	err := ur.db.Create(ud).Error
 
 	if err != nil {
-		return err
+		return util.SetErrorInfo(err)
 	}
 
 	return nil

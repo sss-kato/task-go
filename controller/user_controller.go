@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"task-go/domain"
 	"task-go/service"
+	"task-go/util"
 
 	"github.com/labstack/echo/v4"
 )
@@ -22,7 +23,7 @@ func NewUserController(us service.UserServiceIF) UserControllerIF {
 }
 
 type UserRequest struct {
-	Name       string `sanitized:"true"`
+	Name       string
 	Password   string
 	MailAdress string
 }
@@ -30,8 +31,11 @@ type UserRequest struct {
 func (uc *userController) Signup(c echo.Context) error {
 
 	userReq := &UserRequest{}
-	if err := c.Bind(userReq); err != nil {
-		return err
+
+	if bindErr := c.Bind(userReq); bindErr != nil {
+		// return err
+		util.WriteErrLog(bindErr)
+		return c.JSON(http.StatusBadRequest, bindErr.Error())
 	}
 
 	user := domain.NewUser(html.EscapeString(userReq.Name), userReq.Password, html.EscapeString(userReq.MailAdress))
@@ -39,24 +43,42 @@ func (uc *userController) Signup(c echo.Context) error {
 	nameErr := user.ValidateName()
 	if nameErr != nil {
 		errMsg := &domain.Message{Message: nameErr.Error()}
+
+		// errorLog := util.SetErrorInfo(nameErr)
+		// util.WriteErrLog(errorLog)
+		util.WriteErrLog(nameErr)
+
 		return c.JSON(http.StatusBadRequest, errMsg)
 	}
 
 	pwErr := user.ValidatePassword()
 	if pwErr != nil {
 		errMsg := &domain.Message{Message: pwErr.Error()}
+
+		// errorLog := util.SetErrorInfo(pwErr)
+		util.WriteErrLog(pwErr)
+
 		return c.JSON(http.StatusBadRequest, errMsg)
 	}
 
 	mailErr := user.ValidateMailAdress()
 	if mailErr != nil {
 		errMsg := &domain.Message{Message: mailErr.Error()}
+
+		// errorLog := util.SetErrorInfo(mailErr)
+		util.WriteErrLog(mailErr)
+
 		return c.JSON(http.StatusBadRequest, errMsg)
 	}
 
-	userRes, err := uc.us.Signup(user)
-	if err != nil {
+	userRes, signupErr := uc.us.Signup(user)
+	if signupErr != nil {
 		errMsg := &domain.Message{Message: "signup failed."}
+
+		// errorLog := util.SetErrorInfo(signupErr)
+		// util.WriteErrLog(errorLog)
+		util.WriteErrLog(signupErr)
+
 		return c.JSON(http.StatusInternalServerError, errMsg)
 	}
 

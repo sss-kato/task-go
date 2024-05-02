@@ -94,9 +94,6 @@ func Test_userController_Signup(t *testing.T) {
 			if err := uc.Signup(tt.args.c); (err != nil) != tt.wantErr {
 				t.Errorf("userController.Signup() error = %v, wantErr %v", err, tt.wantErr)
 			}
-			// if rec.Code != http.StatusCreated {
-			// 	t.Errorf("expected status %d; got %d", http.StatusOK, rec.Code)
-			// }
 
 			rec := recMap[tt.name]
 			expectedHttpStatusCode := 0

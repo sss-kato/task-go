@@ -4,9 +4,9 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/hex"
-	"errors"
 	"net/mail"
 
+	"github.com/cockroachdb/errors"
 	"golang.org/x/crypto/pbkdf2"
 )
 
@@ -38,9 +38,11 @@ func (u *user) ValidateName() error {
 
 	if length > 15 {
 		return errors.New("username must be fifteen characters or fewer.")
+		// return util.SetErrorMsg(ErrorMsg01)
 	} else if length < 5 {
 
 		return errors.New("username must be at least five characters long.")
+		// return util.SetErrorMsg(ErrorMsg02)
 	}
 
 	return nil
