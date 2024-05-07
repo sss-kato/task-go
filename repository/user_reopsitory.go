@@ -2,7 +2,8 @@ package repository
 
 import (
 	"task-go/dto"
-	"task-go/util"
+
+	"github.com/cockroachdb/errors"
 
 	"gorm.io/gorm"
 )
@@ -25,7 +26,7 @@ func (ur *userRepository) RegistUser(ud *dto.UserDto) error {
 	err := ur.db.Create(ud).Error
 
 	if err != nil {
-		return util.SetErrorInfo(err)
+		return errors.New(err.Error())
 	}
 
 	return nil

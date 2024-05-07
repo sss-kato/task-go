@@ -37,12 +37,10 @@ func (u *user) ValidateName() error {
 	length := len(u.name)
 
 	if length > 15 {
-		return errors.New("username must be fifteen characters or fewer.")
-		// return util.SetErrorMsg(ErrorMsg01)
+		return errors.New(ErrorMsg01)
 	} else if length < 5 {
 
-		return errors.New("username must be at least five characters long.")
-		// return util.SetErrorMsg(ErrorMsg02)
+		return errors.New(ErrorMsg02)
 	}
 
 	return nil
@@ -54,11 +52,11 @@ func (u *user) ValidatePassword() error {
 
 	if length > 15 {
 
-		return errors.New("password must be fifteen characters or fewer.")
+		return errors.New(ErrorMsg03)
 
 	} else if length < 5 {
 
-		return errors.New("password must be at least five characters long.")
+		return errors.New(ErrorMsg04)
 	}
 	return nil
 }
@@ -69,18 +67,18 @@ func (u *user) ValidateMailAdress() error {
 
 	if lengh > 30 {
 
-		return errors.New("mailadress must be thirty characters or fewer.")
+		return errors.New(ErrorMsg05)
 
 	} else if lengh < 5 {
 
-		return errors.New("mailadress must be at least five characters long.")
+		return errors.New(ErrorMsg06)
 	}
 	//  RFC 5322の観点でチェック
 	_, err := mail.ParseAddress(u.mailadress)
 
 	if err != nil {
 
-		return errors.New("mailadress is invalid.")
+		return errors.New(ErrorMsg07)
 	}
 
 	return nil
