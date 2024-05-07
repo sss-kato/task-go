@@ -45,5 +45,8 @@ jobs:
       - name: Migration
         run: migrate --path ./migrations --database 'postgresql://${{ env.DB_USER }}:${{ env.DB_PW }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/${{ env.DB_NAME }}?sslmode=disable' -verbose up
 
+      - name: Make Dir
+        run: mkdir ./log
+
       - name: Go Run TestCode
         run: go test -v  -cover ./...
