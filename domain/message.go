@@ -6,7 +6,7 @@ const (
 	ErrorMsg03 = "password must be fifteen characters or fewer."
 	ErrorMsg04 = "password must be at least five characters long."
 	ErrorMsg05 = "mailadress must be thirty characters or fewer."
-	ErrorMsg06 = "mailadress must be thirty characters or fewer."
+	ErrorMsg06 = "mailadress must be at least five characters long."
 	ErrorMsg07 = "mailadress is invalid."
 	ErrorMsg08 = "signup failed."
 )
