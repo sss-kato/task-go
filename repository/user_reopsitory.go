@@ -10,7 +10,7 @@ import (
 
 type UserRepositoryIF interface {
 	RegistUser(ud *dto.UserDto) error
-	GetUser(user *dto.UserDto) error
+	GetUser(user *dto.UserDto) (int, error)
 }
 
 type userRepository struct {
@@ -32,13 +32,14 @@ func (ur *userRepository) RegistUser(ud *dto.UserDto) error {
 	return nil
 }
 
-func (ur *userRepository) GetUser(user *dto.UserDto) error {
+func (ur *userRepository) GetUser(user *dto.UserDto) (int, error) {
 
-	// err := ur.db.Where("name=? AND password=?", user.Name, user.Password).First(user).Error
+	result := ur.db.Where("name=? AND password=?", user.Name, user.Password).First(user)
+	err := result.Error
+	userCnt := result.RowsAffected
+	if err != nil {
+		return 0, errors.New(err.Error())
+	}
 
-	// if err != nil {
-	// 	return err
-	// }
-
-	return nil
+	return int(userCnt), nil
 }
