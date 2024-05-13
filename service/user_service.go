@@ -4,6 +4,8 @@ import (
 	"task-go/domain"
 	"task-go/dto"
 	"task-go/repository"
+
+	"github.com/cockroachdb/errors"
 )
 
 type UserServiceIF interface {
@@ -34,12 +36,19 @@ func (us *userService) Signup(user domain.UserIF) (domain.UserResponse, error) {
 }
 
 func (us *userService) Login(user domain.UserIF) (string, error) {
-	// user.Password = hashed(user.Password)
 
-	// err := us.ur.GetUser(user)
-	// if err != nil {
-	// 	return "", err
-	// }
+	user.HashedPassword()
+	ud := &dto.UserDto{Name: user.GetName(), Password: user.GetPassWord()}
+	userCnt, err := us.ur.GetUser(ud)
+
+	if userCnt == 0 {
+		return "", errors.New(domain.ErrorMsg09)
+	}
+
+	if err != nil {
+		return "", err
+	}
+
 	token := "test"
 	return token, nil
 }

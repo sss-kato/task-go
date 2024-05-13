@@ -37,8 +37,9 @@ func (ur *userRepository) GetUser(user *dto.UserDto) (int, error) {
 	result := ur.db.Where("name=? AND password=?", user.Name, user.Password).First(user)
 	err := result.Error
 	userCnt := result.RowsAffected
+
 	if err != nil {
-		return 0, errors.New(err.Error())
+		return int(userCnt), errors.New(err.Error())
 	}
 
 	return int(userCnt), nil
