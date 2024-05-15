@@ -61,3 +61,47 @@ func Test_userService_Signup(t *testing.T) {
 		})
 	}
 }
+
+func Test_userService_Login(t *testing.T) {
+
+	mockUser1 := domain.NewUser("test11", "test11", "test11@gmail")
+	mockUser1.HashedPassword()
+	ud1 := &dto.UserDto{Name: mockUser1.GetName(), Password: mockUser1.GetPassWord()}
+	mockCtl := gomock.NewController(t)
+	defer mockCtl.Finish()
+	mock := repository.NewMockUserRepositoryIF(mockCtl)
+	mock.EXPECT().GetUser(ud1).Do(func(user *dto.UserDto) {
+	}).Return(1, nil)
+
+	type fields struct {
+		ur repository.UserRepositoryIF
+	}
+	type args struct {
+		user domain.UserIF
+	}
+	tests := []struct {
+		name    string
+		fields  fields
+		args    args
+		want    string
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+		{"case1", fields{mock}, args{domain.NewUser("test11", "test11", "test11@gmail")}, "test", false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			us := &userService{
+				ur: tt.fields.ur,
+			}
+			got, err := us.Login(tt.args.user)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("userService.Login() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got != tt.want {
+				t.Errorf("userService.Login() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
