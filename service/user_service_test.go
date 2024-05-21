@@ -7,7 +7,9 @@ import (
 	"task-go/dto"
 	"task-go/repository"
 	"testing"
+	"time"
 
+	"github.com/golang-jwt/jwt"
 	"github.com/golang/mock/gomock"
 )
 
@@ -64,6 +66,7 @@ func Test_userService_Signup(t *testing.T) {
 
 func Test_userService_Login(t *testing.T) {
 
+	// test case1 mock
 	mockUser1 := domain.NewUser("test11", "test11", "test11@gmail")
 	mockUser1.HashedPassword()
 	ud1 := &dto.UserDto{Name: mockUser1.GetName(), Password: mockUser1.GetPassWord()}
@@ -71,7 +74,15 @@ func Test_userService_Login(t *testing.T) {
 	defer mockCtl.Finish()
 	mock := repository.NewMockUserRepositoryIF(mockCtl)
 	mock.EXPECT().GetUser(ud1).Do(func(user *dto.UserDto) {
-	}).Return(1, nil)
+	}).Return(1, 1, nil)
+
+	// test case1 token
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"user_id": 1,
+		"exp":     time.Now().Add(time.Hour * 12).Unix(),
+	})
+	const key = "4fe269f707e7ffdf0c772994046a4242449de81d1acef7bc2dc6588099fabec2"
+	tokenString, _ := token.SignedString([]byte(key))
 
 	type fields struct {
 		ur repository.UserRepositoryIF
@@ -87,7 +98,7 @@ func Test_userService_Login(t *testing.T) {
 		wantErr bool
 	}{
 		// TODO: Add test cases.
-		{"case1", fields{mock}, args{domain.NewUser("test11", "test11", "test11@gmail")}, "test", false},
+		{"case1", fields{mock}, args{domain.NewUser("test11", "test11", "test11@gmail")}, tokenString, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

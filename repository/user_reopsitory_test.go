@@ -86,28 +86,34 @@ func Test_userRepository_GetUser(t *testing.T) {
 		user *dto.UserDto
 	}
 	tests := []struct {
-		name    string
-		fields  fields
-		args    args
-		want    int
-		wantErr bool
+		name       string
+		fields     fields
+		args       args
+		wantCnt    int
+		wantUserId int
+		wantErr    bool
 	}{
 		// TODO: Add test cases.
-		{"case1", fields{db.NewDB()}, args{testUserDto1}, 1, false},
-		{"case2", fields{db.NewDB()}, args{testUserDto2}, 0, true},
+		{"case1", fields{db.NewDB()}, args{testUserDto1}, 1, 32, false},
+		{"case2", fields{db.NewDB()}, args{testUserDto2}, 0, 0, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			ur := &userRepository{
 				db: tt.fields.db,
 			}
-			got, err := ur.GetUser(tt.args.user)
+			cnt, userID, err := ur.GetUser(tt.args.user)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("userRepository.GetUser() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if got != tt.want {
-				t.Errorf("userRepository.GetUser() = %v, want %v", got, tt.want)
+
+			if cnt != tt.wantCnt {
+				t.Errorf("userRepository.GetUser() = %v, want %v", cnt, tt.wantCnt)
+			}
+
+			if userID != tt.wantUserId {
+				t.Errorf("userRepository.GetUser() = %v, want %v", userID, tt.wantCnt)
 			}
 		})
 	}

@@ -35,12 +35,13 @@ func (m *MockUserRepositoryIF) EXPECT() *MockUserRepositoryIFMockRecorder {
 }
 
 // GetUser mocks base method.
-func (m *MockUserRepositoryIF) GetUser(user *dto.UserDto) (int, error) {
+func (m *MockUserRepositoryIF) GetUser(user *dto.UserDto) (int, int, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUser", user)
 	ret0, _ := ret[0].(int)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret1, _ := ret[1].(int)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
 }
 
 // GetUser indicates an expected call of GetUser.
