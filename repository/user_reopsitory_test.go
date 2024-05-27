@@ -94,7 +94,7 @@ func Test_userRepository_GetUser(t *testing.T) {
 		wantErr    bool
 	}{
 		// TODO: Add test cases.
-		{"case1", fields{db.NewDB()}, args{testUserDto1}, 1, 32, false},
+		{"case1", fields{db.NewDB()}, args{testUserDto1}, 1, 1, false},
 		{"case2", fields{db.NewDB()}, args{testUserDto2}, 0, 0, true},
 	}
 	for _, tt := range tests {
