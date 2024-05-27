@@ -86,14 +86,24 @@ func Test_userService_Login(t *testing.T) {
 	tokenString, _ := token.SignedString([]byte(key))
 
 	// test case2 mock
-	// mockUser2 := domain.NewUser("test12", "test12", "test12@gmail")
-	// mockUser2.HashedPassword()
-	// ud2 := &dto.UserDto{Name: mockUser2.GetName(), Password: mockUser2.GetPassWord()}
-	// mockCtl2 := gomock.NewController(t)
-	// defer mockCtl2.Finish()
-	// mock2 := repository.NewMockUserRepositoryIF(mockCtl2)
-	// mock2.EXPECT().GetUser(ud2).Do(func(user *dto.UserDto) {
-	// }).Return(1, 0, nil)
+	mockUser2 := domain.NewUser("test12", "test12", "test12@gmail")
+	mockUser2.HashedPassword()
+	ud2 := &dto.UserDto{Name: mockUser2.GetName(), Password: mockUser2.GetPassWord()}
+	mockCtl2 := gomock.NewController(t)
+	defer mockCtl2.Finish()
+	mock2 := repository.NewMockUserRepositoryIF(mockCtl2)
+	mock2.EXPECT().GetUser(ud2).Do(func(user *dto.UserDto) {
+	}).Return(0, 1, nil)
+
+	// test case3 mock
+	mockUser3 := domain.NewUser("test13", "test13", "test13@gmail")
+	mockUser3.HashedPassword()
+	ud3 := &dto.UserDto{Name: mockUser3.GetName(), Password: mockUser3.GetPassWord()}
+	mockCtl3 := gomock.NewController(t)
+	defer mockCtl3.Finish()
+	mock3 := repository.NewMockUserRepositoryIF(mockCtl3)
+	mock3.EXPECT().GetUser(ud3).Do(func(user *dto.UserDto) {
+	}).Return(1, 1, errors.New(""))
 
 	type fields struct {
 		ur repository.UserRepositoryIF
@@ -110,7 +120,8 @@ func Test_userService_Login(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{"case1", fields{mock}, args{domain.NewUser("test11", "test11", "test11@gmail")}, tokenString, false},
-		// {"case2", fields{mock}, args{domain.NewUser("test12", "test12", "test12@gmail")}, "", true},
+		{"case2", fields{mock2}, args{domain.NewUser("test12", "test12", "test12@gmail")}, "", true},
+		{"case3", fields{mock3}, args{domain.NewUser("test13", "test13", "test13@gmail")}, "", true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -129,7 +140,7 @@ func Test_userService_Login(t *testing.T) {
 					t.Errorf("Expected tokens to match, but they did not")
 				}
 
-			case "case2":
+			case "case2", "case3":
 				if got != tt.want {
 					t.Errorf("userService.Login() error = %v, wantErr %v", got, tt.want)
 				}
