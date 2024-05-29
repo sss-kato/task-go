@@ -21,7 +21,8 @@ func Test_userController_Signup(t *testing.T) {
 	mock := service.NewMockUserServiceIF(mockCtl)
 
 	// test case1
-	mock.EXPECT().Signup(domain.NewUser("test1", "test1", "test1@gmail.com")).Return(domain.UserResponse{ID: 1, Name: "test"}, nil)
+	user1, _ := domain.NewUser("test1", "test1", "test1@gmail.com")
+	mock.EXPECT().Signup(user1).Return(domain.UserResponse{ID: 1, Name: "test"}, nil)
 	e := echo.New()
 	req1 := httptest.NewRequest(http.MethodPost, "/signup", strings.NewReader(`{"name":"test1","password":"test1","mailadress":"test1@gmail.com"}`))
 	req1.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
@@ -29,7 +30,8 @@ func Test_userController_Signup(t *testing.T) {
 	c := e.NewContext(req1, rec1)
 
 	// test case2
-	mock.EXPECT().Signup(domain.NewUser("test2", "test2", "test2@gmail.com")).Return(domain.UserResponse{}, errors.New("error"))
+	user2, _ := domain.NewUser("test2", "test2", "test2@gmail.com")
+	mock.EXPECT().Signup(user2).Return(domain.UserResponse{}, errors.New("error"))
 	e2 := echo.New()
 	req2 := httptest.NewRequest(http.MethodPost, "/signup", strings.NewReader(`{"name":"test2","password":"test2","mailadress":"test2@gmail.com"}`))
 	req2.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)

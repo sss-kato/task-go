@@ -25,7 +25,6 @@ func NewUserService(ur repository.UserRepositoryIF) UserServiceIF {
 
 func (us *userService) Signup(user domain.UserIF) (domain.UserResponse, error) {
 
-	user.HashedPassword()
 	ud := &dto.UserDto{Name: user.GetName(), Mailadress: user.GetMailAdress(), Password: user.GetPassWord()}
 
 	err := us.ur.RegistUser(ud)
@@ -39,7 +38,6 @@ func (us *userService) Signup(user domain.UserIF) (domain.UserResponse, error) {
 
 func (us *userService) Login(user domain.UserIF) (string, error) {
 
-	user.HashedPassword()
 	ud := &dto.UserDto{Name: user.GetName(), Password: user.GetPassWord()}
 	userCnt, userId, userErr := us.ur.GetUser(ud)
 

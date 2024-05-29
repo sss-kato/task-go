@@ -14,8 +14,7 @@ import (
 )
 
 func Test_userService_Signup(t *testing.T) {
-	mockUser1 := domain.NewUser("test11", "test11", "test11@gmail")
-	mockUser1.HashedPassword()
+	mockUser1, _ := domain.NewUser("test11", "test11", "test11@gmail")
 	ud1 := &dto.UserDto{Name: mockUser1.GetName(), Password: mockUser1.GetPassWord(), Mailadress: mockUser1.GetMailAdress()}
 	mockCtl := gomock.NewController(t)
 	defer mockCtl.Finish()
@@ -25,10 +24,12 @@ func Test_userService_Signup(t *testing.T) {
 		user.ID = 1
 	}).Return(nil)
 
-	mockUser2 := domain.NewUser("test11", "test11", "test11@gmail")
-	mockUser2.HashedPassword()
+	mockUser2, _ := domain.NewUser("test11", "test11", "test11@gmail")
 	ud2 := &dto.UserDto{Name: mockUser2.GetName(), Password: mockUser2.GetPassWord(), Mailadress: mockUser2.GetMailAdress()}
 	mock.EXPECT().RegistUser(ud2).Return(errors.New("test"))
+
+	testUser1, _ := domain.NewUser("test11", "test11", "test11@gmail")
+	testUser2, _ := domain.NewUser("test11", "test11", "test11@gmail")
 
 	type fields struct {
 		ur repository.UserRepositoryIF
@@ -44,8 +45,8 @@ func Test_userService_Signup(t *testing.T) {
 		wantErr bool
 	}{
 		// TODO: Add test cases.
-		{"case1", fields{mock}, args{domain.NewUser("test11", "test11", "test11@gmail")}, domain.UserResponse{ID: 1, Name: "test1"}, false},
-		{"case2", fields{mock}, args{domain.NewUser("test11", "test11", "test11@gmail")}, domain.UserResponse{}, true},
+		{"case1", fields{mock}, args{testUser1}, domain.UserResponse{ID: 1, Name: "test1"}, false},
+		{"case2", fields{mock}, args{testUser2}, domain.UserResponse{}, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -69,8 +70,7 @@ func Test_userService_Login(t *testing.T) {
 	const key = "4fe269f707e7ffdf0c772994046a4242449de81d1acef7bc2dc6588099fabec2"
 
 	// test case1 mock
-	mockUser1 := domain.NewUser("test11", "test11", "test11@gmail")
-	mockUser1.HashedPassword()
+	mockUser1, _ := domain.NewUser("test11", "test11", "test11@gmail")
 	ud1 := &dto.UserDto{Name: mockUser1.GetName(), Password: mockUser1.GetPassWord()}
 	mockCtl := gomock.NewController(t)
 	defer mockCtl.Finish()
@@ -86,8 +86,7 @@ func Test_userService_Login(t *testing.T) {
 	tokenString, _ := token.SignedString([]byte(key))
 
 	// test case2 mock
-	mockUser2 := domain.NewUser("test12", "test12", "test12@gmail")
-	mockUser2.HashedPassword()
+	mockUser2, _ := domain.NewUser("test12", "test12", "test12@gmail")
 	ud2 := &dto.UserDto{Name: mockUser2.GetName(), Password: mockUser2.GetPassWord()}
 	mockCtl2 := gomock.NewController(t)
 	defer mockCtl2.Finish()
@@ -96,14 +95,17 @@ func Test_userService_Login(t *testing.T) {
 	}).Return(0, 1, nil)
 
 	// test case3 mock
-	mockUser3 := domain.NewUser("test13", "test13", "test13@gmail")
-	mockUser3.HashedPassword()
+	mockUser3, _ := domain.NewUser("test13", "test13", "test13@gmail")
 	ud3 := &dto.UserDto{Name: mockUser3.GetName(), Password: mockUser3.GetPassWord()}
 	mockCtl3 := gomock.NewController(t)
 	defer mockCtl3.Finish()
 	mock3 := repository.NewMockUserRepositoryIF(mockCtl3)
 	mock3.EXPECT().GetUser(ud3).Do(func(user *dto.UserDto) {
 	}).Return(1, 1, errors.New(""))
+
+	testUser1, _ := domain.NewUser("test11", "test11", "test11@gmail")
+	testUser2, _ := domain.NewUser("test12", "test12", "test12@gmail")
+	testUser3, _ := domain.NewUser("test13", "test13", "test13@gmail")
 
 	type fields struct {
 		ur repository.UserRepositoryIF
@@ -119,9 +121,9 @@ func Test_userService_Login(t *testing.T) {
 		wantErr bool
 	}{
 		// TODO: Add test cases.
-		{"case1", fields{mock}, args{domain.NewUser("test11", "test11", "test11@gmail")}, tokenString, false},
-		{"case2", fields{mock2}, args{domain.NewUser("test12", "test12", "test12@gmail")}, "", true},
-		{"case3", fields{mock3}, args{domain.NewUser("test13", "test13", "test13@gmail")}, "", true},
+		{"case1", fields{mock}, args{testUser1}, tokenString, false},
+		{"case2", fields{mock2}, args{testUser2}, "", true},
+		{"case3", fields{mock3}, args{testUser3}, "", true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

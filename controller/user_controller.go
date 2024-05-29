@@ -37,31 +37,13 @@ func (uc *userController) Signup(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, bindErr.Error())
 	}
 
-	user := domain.NewUser(html.EscapeString(userReq.Name), userReq.Password, html.EscapeString(userReq.MailAdress))
+	user, useErr := domain.NewUser(html.EscapeString(userReq.Name), userReq.Password, html.EscapeString(userReq.MailAdress))
 
-	nameErr := user.ValidateName()
-	if nameErr != nil {
-		errMsg := &domain.Message{Message: nameErr.Error()}
+	if useErr != nil {
 
-		util.WriteErrLog(nameErr)
+		errMsg := &domain.Message{Message: useErr.Error()}
 
-		return c.JSON(http.StatusBadRequest, errMsg)
-	}
-
-	pwErr := user.ValidatePassword()
-	if pwErr != nil {
-		errMsg := &domain.Message{Message: pwErr.Error()}
-
-		util.WriteErrLog(pwErr)
-
-		return c.JSON(http.StatusBadRequest, errMsg)
-	}
-
-	mailErr := user.ValidateMailAdress()
-	if mailErr != nil {
-		errMsg := &domain.Message{Message: mailErr.Error()}
-
-		util.WriteErrLog(mailErr)
+		util.WriteErrLog(useErr)
 
 		return c.JSON(http.StatusBadRequest, errMsg)
 	}
