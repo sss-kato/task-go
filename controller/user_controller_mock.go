@@ -34,6 +34,20 @@ func (m *MockUserControllerIF) EXPECT() *MockUserControllerIFMockRecorder {
 	return m.recorder
 }
 
+// Login mocks base method.
+func (m *MockUserControllerIF) Login(e echo.Context) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Login", e)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Login indicates an expected call of Login.
+func (mr *MockUserControllerIFMockRecorder) Login(e interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Login", reflect.TypeOf((*MockUserControllerIF)(nil).Login), e)
+}
+
 // Signup mocks base method.
 func (m *MockUserControllerIF) Signup(e echo.Context) error {
 	m.ctrl.T.Helper()

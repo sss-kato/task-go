@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/hex"
+	"html"
 	"net/mail"
 
 	"github.com/cockroachdb/errors"
@@ -24,17 +25,20 @@ type user struct {
 
 func NewUser(nm string, pw string, ma string) (UserIF, error) {
 
-	nmErr := validateName(nm)
+	enm := html.EscapeString(nm)
+	nmErr := validateName(enm)
 	if nmErr != nil {
 		return nil, nmErr
 	}
 
-	maErr := validateMailAdress(ma)
+	ema := html.EscapeString(ma)
+	maErr := validateMailAdress(ema)
 	if maErr != nil {
 		return nil, maErr
 	}
 
-	pwErr := validatePassword(pw)
+	epw := html.EscapeString(pw)
+	pwErr := validatePassword(epw)
 	if pwErr != nil {
 		return nil, pwErr
 	}
