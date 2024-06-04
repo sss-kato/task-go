@@ -9,7 +9,7 @@ const (
 	ErrorMsg06 = "mailadress must be at least five characters long."
 	ErrorMsg07 = "mailadress is invalid."
 	ErrorMsg08 = "signup failed."
-	ErrorMsg09 = "user does not exist"
+	ErrorMsg09 = "user does not exist."
 )
 
 type Message struct {
