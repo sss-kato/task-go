@@ -16,6 +16,7 @@ func TestNewRouter(t *testing.T) {
 
 	e := echo.New()
 	e.POST("/signup", mock.Signup)
+	e.POST("/login", mock.Login)
 
 	type args struct {
 		uc controller.UserControllerIF
@@ -38,13 +39,21 @@ func TestNewRouter(t *testing.T) {
 			for _, route := range routes {
 				switch route.Path {
 
-				case tt.want.Routes()[0].Path: // Pathが/signupの時:
-					if route.Method != tt.want.Routes()[0].Method {
-						t.Errorf("NewRouter().Method = %v, want %v", route.Method, tt.want.Routes()[0].Method)
+				case "/signup":
+					if route.Method != "POST" {
+						t.Errorf("NewRouter().Method = %v, want %v", route.Method, "POST")
 					}
 
 					if route.Name != "task-go/controller.UserControllerIF.Signup-fm" {
-						t.Errorf("NewRouter().Name = %v, want %v", route.Name, tt.want.Routes()[0].Name)
+						t.Errorf("NewRouter().Name = %v, want %v", route.Name, "task-go/controller.UserControllerIF.Signup-fm")
+					}
+
+				case "/login":
+					if route.Method != "POST" {
+						t.Errorf("NewRouter().Method = %v, want %v", route.Method, "POST")
+					}
+					if route.Name != "task-go/controller.UserControllerIF.Login-fm" {
+						t.Errorf("NewRouter().Name = %v, want %v", route.Name, "task-go/controller.UserControllerIF.Login-fm")
 					}
 
 				default:
