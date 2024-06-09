@@ -10,6 +10,7 @@ const (
 	ErrorMsg07 = "mailadress is invalid."
 	ErrorMsg08 = "signup failed."
 	ErrorMsg09 = "user does not exist."
+	ErrorMsg10 = "no permission."
 )
 
 type Message struct {

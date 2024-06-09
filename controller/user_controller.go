@@ -13,6 +13,7 @@ import (
 type UserControllerIF interface {
 	Signup(e echo.Context) error
 	Login(e echo.Context) error
+	Logout(e echo.Context) error
 }
 
 type userController struct {
@@ -88,6 +89,19 @@ func (uc *userController) Login(c echo.Context) error {
 	// cookie.Secure = true
 	cookie.HttpOnly = true
 	cookie.SameSite = http.SameSiteNoneMode
+	c.SetCookie(cookie)
+
+	return c.NoContent(http.StatusOK)
+}
+
+func (uc *userController) Logout(c echo.Context) error {
+
+	cookie, err := c.Cookie("token")
+	if err != nil {
+		return c.JSON(http.StatusUnauthorized, domain.ErrorMsg10)
+	}
+
+	cookie = nil
 	c.SetCookie(cookie)
 
 	return c.NoContent(http.StatusOK)

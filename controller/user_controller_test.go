@@ -278,3 +278,71 @@ func Test_userController_Login(t *testing.T) {
 		})
 	}
 }
+
+func Test_userController_Logout(t *testing.T) {
+
+	mockCtl := gomock.NewController(t)
+	defer mockCtl.Finish()
+	mock := service.NewMockUserServiceIF(mockCtl)
+
+	e1 := echo.New()
+	req1 := httptest.NewRequest(http.MethodPost, "/logout", strings.NewReader(""))
+	req1.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	req1.AddCookie(&http.Cookie{
+		Name:  "token",
+		Value: "test",
+	})
+	req1.AddCookie(&http.Cookie{
+		Name:  "toke",
+		Value: "test",
+	})
+	rec1 := httptest.NewRecorder()
+	c1 := e1.NewContext(req1, rec1)
+
+	e2 := echo.New()
+	req2 := httptest.NewRequest(http.MethodPost, "/logout", strings.NewReader(""))
+	req2.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	req2.AddCookie(&http.Cookie{
+		Name:  "toke",
+		Value: "test",
+	})
+	rec2 := httptest.NewRecorder()
+	c2 := e2.NewContext(req2, rec2)
+
+	type fields struct {
+		us service.UserServiceIF
+	}
+	type args struct {
+		c echo.Context
+	}
+	tests := []struct {
+		name    string
+		fields  fields
+		args    args
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+		{"case1", fields{mock}, args{c1}, false},
+		{"case2", fields{mock}, args{c2}, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			uc := &userController{
+				us: tt.fields.us,
+			}
+			if err := uc.Logout(tt.args.c); (err != nil) != tt.wantErr {
+				t.Errorf("userController.Logout() error = %v, wantErr %v", err, tt.wantErr)
+			}
+
+			if len(rec1.Result().Cookies()) != 0 {
+				t.Error("cookie token is remained")
+			}
+
+			if tt.name == "casa2" {
+				expectedJSON := `{"message":"no permission."}`
+				assert.JSONEq(t, expectedJSON, rec2.Body.String(), fmt.Sprintf("expected JSON: %s; actual JSON: %s", expectedJSON, rec2.Body.String()))
+			}
+
+		})
+	}
+}
