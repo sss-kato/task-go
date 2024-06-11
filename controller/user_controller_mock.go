@@ -48,6 +48,20 @@ func (mr *MockUserControllerIFMockRecorder) Login(e interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Login", reflect.TypeOf((*MockUserControllerIF)(nil).Login), e)
 }
 
+// Logout mocks base method.
+func (m *MockUserControllerIF) Logout(e echo.Context) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Logout", e)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Logout indicates an expected call of Logout.
+func (mr *MockUserControllerIFMockRecorder) Logout(e interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Logout", reflect.TypeOf((*MockUserControllerIF)(nil).Logout), e)
+}
+
 // Signup mocks base method.
 func (m *MockUserControllerIF) Signup(e echo.Context) error {
 	m.ctrl.T.Helper()
