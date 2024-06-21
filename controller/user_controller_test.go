@@ -334,8 +334,15 @@ func Test_userController_Logout(t *testing.T) {
 				t.Errorf("userController.Logout() error = %v, wantErr %v", err, tt.wantErr)
 			}
 
-			if len(rec1.Result().Cookies()) != 0 {
-				t.Error("cookie token is remained")
+			if tt.name == "case1" {
+
+				cookie := rec1.Result().Cookies()[0]
+				if cookie.MaxAge != -1 {
+					t.Error("maxage is wrong")
+				}
+				if !cookie.Expires.Before(time.Now()) {
+					t.Error("expire time is wrong")
+				}
 			}
 
 			if tt.name == "casa2" {

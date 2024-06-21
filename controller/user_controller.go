@@ -101,7 +101,9 @@ func (uc *userController) Logout(c echo.Context) error {
 		return c.JSON(http.StatusUnauthorized, domain.ErrorMsg10)
 	}
 
-	cookie = nil
+	cookie.Expires = time.Unix(0, 0)
+	cookie.MaxAge = -1
+
 	c.SetCookie(cookie)
 
 	return c.NoContent(http.StatusOK)
