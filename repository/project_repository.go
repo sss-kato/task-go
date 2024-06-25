@@ -1,25 +1,29 @@
 package repository
 
-import (
-	"task-go/dto"
+// import (
+// 	"task-go/dto"
 
-	"gorm.io/gorm"
-)
+// 	"gorm.io/gorm"
+// )
 
-type ProjectRepositoryIF interface {
-	GetProjects(pd *dto.ProjectDto) error
-	CreateProject(pd *dto.ProjectDto) error
-	DeleteProject(pd *dto.ProjectDto) error
-}
+// type ProjectRepositoryIF interface {
+// 	GetProjects(pd dto.ProjectDto, ud dto.UserDto) ([]dto.ProjectDto, error)
+// 	CreateProject(pd dto.ProjectDto) error
+// 	DeleteProject(pd dto.ProjectDto) error
+// }
 
-type projectRepository struct {
-	db *gorm.DB
-}
+// type projectRepository struct {
+// 	db *gorm.DB
+// }
 
 // func NewProjectRepository(db *gorm.DB) ProjectRepositoryIF {
 // 	return &projectRepository{db}
 // }
 
-// func (pr *projectRepository) GetProjects(pd *dto.ProjectDto) error {
+// func (pr *projectRepository) GetProjects(pd dto.ProjectDto, ud dto.UserDto) ([]dto.ProjectDto, error) {
+
+// }
+
+// func (pr *projectRepository) CreateProject(pd dto.ProjectDto) error {
 
 // }
