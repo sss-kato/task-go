@@ -1,8 +1,11 @@
 package repository
 
 // func Test_projectRepository_CreateProject(t *testing.T) {
+// 	jst, _ := time.LoadLocation("Asia/Tokyo")
+// 	now := time.Now().In(jst)
+// 	// formattedNow := now.Format("2006-01-02 15:04:05.000")
 // 	test1ProjectDto := &dto.ProjectDto{Name: "testproject1", UserID: 1}
-// 	test2ProjectDto := &dto.ProjectDto{Name: "testproject2", UserID: 2}
+// 	test2ProjectDto := &dto.ProjectDto{Name: "testproject2", UserID: 2, CreatedAt: now, UpdatedAt: now}
 
 // 	dbm, mock, err := sqlmock.New()
 // 	if err != nil {
@@ -22,9 +25,11 @@ package repository
 
 // 	mock.ExpectBegin()
 
-// 	mock.ExpectExec("INSERT INTO \"projects\" \\(\"name\",\"user_id\",\"created_at\",\"updated_at\"\\) VALUES \\(\\$1,\\$2,\\$3,\\$4\\) RETURNING \"id\"").
-// 		WithArgs(test2ProjectDto.Name, test2ProjectDto.UserID, sqlmock.AnyArg(), sqlmock.AnyArg()). // created_at, updated_atに任意の値を設定
-// 		WillReturnResult(sqlmock.NewResult(1, 1))
+// 	rows := sqlmock.NewRows([]string{"id"}).AddRow(1)
+// 	mock.ExpectQuery(regexp.QuoteMeta(
+// 		`INSERT INTO "projects" ("name","user_id","created_at","updated_at") VALUES ($1,$2,$3,$4)`)).
+// 		WillReturnRows(rows)
+// 	mock.ExpectCommit()
 
 // 	mock.ExpectExec("INSERT INTO \"project_user_mappings\"").
 // 		WithArgs(sqlmock.AnyArg(), test2ProjectDto.UserID).
