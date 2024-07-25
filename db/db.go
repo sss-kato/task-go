@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/DATA-DOG/go-sqlmock"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -37,4 +38,25 @@ func CloseDB(db *gorm.DB) {
 	if err := con.Close(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func CreateDBMock() (sqlmock.Sqlmock, *gorm.DB) {
+	dbm, mock, err := sqlmock.New()
+	if err != nil {
+		log.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
+	}
+	// defer dbm.Close()
+	dialector := postgres.New(postgres.Config{
+		DSN:                  "sqlmock_db_0",
+		DriverName:           "postgres",
+		Conn:                 dbm,
+		PreferSimpleProtocol: true,
+	})
+	gormDB, err := gorm.Open(dialector, &gorm.Config{})
+	if err != nil {
+		log.Fatalf("an error '%s' was not expected when initializing a gorm db connection", err)
+	}
+
+	return mock, gormDB
+
 }
