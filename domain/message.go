@@ -1,8 +1,8 @@
 package domain
 
 const (
-	ErrorMsg01 = "username must be fifteen characters or fewer."
-	ErrorMsg02 = "username must be at least five characters long."
+	ErrorMsg01 = "user name must be fifteen characters or fewer."
+	ErrorMsg02 = "user name must be at least five characters long."
 	ErrorMsg03 = "password must be fifteen characters or fewer."
 	ErrorMsg04 = "password must be at least five characters long."
 	ErrorMsg05 = "mailadress must be thirty characters or fewer."
@@ -11,6 +11,7 @@ const (
 	ErrorMsg08 = "signup failed."
 	ErrorMsg09 = "user does not exist."
 	ErrorMsg10 = "no permission."
+	ErrorMsg11 = "project name must be at least thirty characters long."
 )
 
 type Message struct {
