@@ -14,10 +14,11 @@ import (
 )
 
 func Test_userService_Signup(t *testing.T) {
-	mockUser1, _ := domain.NewUser("test11", "test11", "test11@gmail")
-	ud1 := &dto.UserDto{Name: mockUser1.GetName(), Password: mockUser1.GetPassWord(), Mailadress: mockUser1.GetMailAdress()}
 	mockCtl := gomock.NewController(t)
 	defer mockCtl.Finish()
+
+	mockUser1, _ := domain.NewUser("test111", "test11", "test11@gmail")
+	ud1 := &dto.UserDto{Name: mockUser1.GetName(), Password: mockUser1.GetPassWord(), Mailadress: mockUser1.GetMailAdress()}
 	mock := repository.NewMockUserRepositoryIF(mockCtl)
 	mock.EXPECT().RegistUser(ud1).Do(func(user *dto.UserDto) {
 		user.Name = "test1"
@@ -26,9 +27,10 @@ func Test_userService_Signup(t *testing.T) {
 
 	mockUser2, _ := domain.NewUser("test11", "test11", "test11@gmail")
 	ud2 := &dto.UserDto{Name: mockUser2.GetName(), Password: mockUser2.GetPassWord(), Mailadress: mockUser2.GetMailAdress()}
-	mock.EXPECT().RegistUser(ud2).Return(errors.New("test"))
+	mock2 := repository.NewMockUserRepositoryIF(mockCtl)
+	mock2.EXPECT().RegistUser(ud2).Return(errors.New("testdddd"))
 
-	testUser1, _ := domain.NewUser("test11", "test11", "test11@gmail")
+	testUser1, _ := domain.NewUser("test111", "test11", "test11@gmail")
 	testUser2, _ := domain.NewUser("test11", "test11", "test11@gmail")
 
 	type fields struct {
@@ -46,7 +48,7 @@ func Test_userService_Signup(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{"case1", fields{mock}, args{testUser1}, domain.UserResponse{ID: 1, Name: "test1"}, false},
-		{"case2", fields{mock}, args{testUser2}, domain.UserResponse{}, true},
+		{"case2", fields{mock2}, args{testUser2}, domain.UserResponse{}, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

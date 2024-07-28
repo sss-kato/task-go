@@ -7,7 +7,7 @@ import (
 )
 
 type ProjectServiceIF interface {
-	CreateProject(pr domain.ProjectIF, u domain.UserIF) error
+	CreateProject(pr domain.ProjectIF) error
 }
 
 type projectService struct {
@@ -18,8 +18,8 @@ func NewProjectService(pr repository.ProjectRepositoryIF) ProjectServiceIF {
 	return &projectService{pr}
 }
 
-func (ps *projectService) CreateProject(pr domain.ProjectIF, u domain.UserIF) error {
-	pd := dto.ProjectDto{Name: pr.GetProjectName()}
+func (ps *projectService) CreateProject(pr domain.ProjectIF) error {
+	pd := dto.ProjectDto{Name: pr.GetProjectName(), UserID: uint(pr.GetUserID())}
 	err := ps.pr.CreateProject(pd)
 	if err != nil {
 		return err
