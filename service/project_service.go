@@ -19,7 +19,7 @@ func NewProjectService(pr repository.ProjectRepositoryIF) ProjectServiceIF {
 }
 
 func (ps *projectService) CreateProject(pr domain.ProjectIF) error {
-	pd := dto.ProjectDto{Name: pr.GetProjectName(), UserID: uint(pr.GetUserID())}
+	pd := &dto.ProjectDto{Name: pr.GetProjectName(), UserID: uint(pr.GetUserID())}
 	err := ps.pr.CreateProject(pd)
 	if err != nil {
 		return err

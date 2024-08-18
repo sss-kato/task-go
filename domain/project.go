@@ -29,7 +29,7 @@ func NewProject(pnm string, uid int) (ProjectIF, error) {
 func validateProjectName(pnm string) error {
 
 	length := len(pnm)
-	if length < 30 {
+	if length > 30 {
 		return errors.New(ErrorMsg11)
 	}
 

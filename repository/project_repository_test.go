@@ -48,7 +48,7 @@ func Test_projectRepository_CreateProject(t *testing.T) {
 		db *gorm.DB
 	}
 	type args struct {
-		pd dto.ProjectDto
+		pd *dto.ProjectDto
 	}
 	tests := []struct {
 		name    string
@@ -57,8 +57,8 @@ func Test_projectRepository_CreateProject(t *testing.T) {
 		wantErr bool
 	}{
 		// TODO: Add test cases.
-		{"case1", fields{gormDB1}, args{*test1ProjectDto}, false},
-		{"case2", fields{gormDB2}, args{*test2ProjectDto}, true},
+		{"case1", fields{gormDB1}, args{test1ProjectDto}, false},
+		{"case2", fields{gormDB2}, args{test2ProjectDto}, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
