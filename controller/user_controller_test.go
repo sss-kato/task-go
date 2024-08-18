@@ -121,7 +121,7 @@ func Test_userController_Signup(t *testing.T) {
 			case "case2":
 				expectedJSON = `{"message":"signup failed."}`
 			case "case3":
-				expectedJSON = `{"message":"username must be at least five characters long."}`
+				expectedJSON = `{"message":"user name must be at least five characters long."}`
 			case "case4":
 				expectedJSON = `{"message":"password must be at least five characters long."}`
 			case "case5":
@@ -261,7 +261,7 @@ func Test_userController_Login(t *testing.T) {
 			case "case2":
 				expectedJSON = `{"message":"user does not exist."}`
 			case "case3":
-				expectedJSON = `{"message":"username must be at least five characters long."}`
+				expectedJSON = `{"message":"user name must be at least five characters long."}`
 			case "case4":
 				expectedJSON = `{"message":"password must be at least five characters long."}`
 			case "case5":
