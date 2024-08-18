@@ -1,8 +1,6 @@
 package domain
 
 import (
-	"reflect"
-
 	"github.com/cockroachdb/errors"
 )
 
@@ -36,17 +34,17 @@ func validateProjectName(pnm string) error {
 	return nil
 }
 
-func validateUserID(uid interface{}) error {
+// func validateUserID(uid interface{}) error {
 
-	kind := reflect.TypeOf(uid).Kind()
+// 	kind := reflect.TypeOf(uid).Kind()
 
-	if kind != reflect.Int {
+// 	if kind != reflect.Int {
 
-		return errors.New(ErrorMsg12)
-	}
+// 		return errors.New(ErrorMsg12)
+// 	}
 
-	return nil
-}
+// 	return nil
+// }
 
 func (p *project) GetProjectName() string {
 
