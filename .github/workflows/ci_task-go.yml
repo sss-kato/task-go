@@ -33,7 +33,7 @@ jobs:
         run: golangci-lint run
 
       - name: Docker Compose Up
-        run: docker-compose up -d
+        run: docker compose up -d
 
       - name: Install golang-migrate
         run: |
