@@ -13,6 +13,7 @@ const (
 	ErrorMsg10 = "no permission."
 	ErrorMsg11 = "project name must be at least thirty characters long."
 	ErrorMsg12 = "please enter a numeric user id."
+	ErrorMsg13 = "creating project failed."
 )
 
 type Message struct {
