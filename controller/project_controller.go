@@ -44,7 +44,7 @@ func (pc *projectController) CreateProject(c echo.Context) error {
 
 	createPjErr := pc.ps.CreateProject(project)
 	if createPjErr != nil {
-		errMsg := &domain.Message{Message: domain.ErrorMsg13}
+		errMsg := &domain.Message{Message: domain.ErrorMsg08}
 		util.WriteErrLog(createPjErr)
 		return c.JSON(http.StatusInternalServerError, errMsg)
 	}
