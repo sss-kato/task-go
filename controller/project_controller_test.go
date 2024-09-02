@@ -82,15 +82,17 @@ func Test_projectController_CreateProject(t *testing.T) {
 			}
 
 			tampJSON := `{"message":"%s"}`
-
 			expectedJSON := ""
+			errorMsg := ""
 			switch tt.name {
 
 			case "case2":
-				expectedJSON = fmt.Sprintf(tampJSON, domain.ErrorMsg13)
+				errorMsg = domain.ErrorMsg13
 			}
 
-			if expectedJSON != "" {
+			expectedJSON = fmt.Sprintf(tampJSON, errorMsg)
+
+			if errorMsg != "" {
 				assert.JSONEq(t, expectedJSON, rec.Body.String(), fmt.Sprintf("expected JSON: %s; actual JSON: %s", expectedJSON, rec.Body.String()))
 			}
 		})

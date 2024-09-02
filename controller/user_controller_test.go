@@ -255,22 +255,25 @@ func Test_userController_Login(t *testing.T) {
 				t.Errorf("expected cookie name %s; got %s", "/", rec.Result().Cookies()[0].Path)
 			}
 
+			tampJSON := `{"message":"%s"}`
 			expectedJSON := ""
+			errorMsg := ""
 			switch tt.name {
 
 			case "case2":
-				expectedJSON = `{"message":"user does not exist."}`
+				errorMsg = domain.ErrorMsg09
 			case "case3":
-				expectedJSON = `{"message":"user name must be at least five characters long."}`
+				errorMsg = domain.ErrorMsg02
 			case "case4":
-				expectedJSON = `{"message":"password must be at least five characters long."}`
+				errorMsg = domain.ErrorMsg04
 			case "case5":
-				expectedJSON = `{"message":"mailadress must be at least five characters long."}`
+				errorMsg = domain.ErrorMsg06
 			case "case6":
-				expectedJSON = `{"message":"mailadress is invalid."}`
+				errorMsg = domain.ErrorMsg07
 			}
 
-			if expectedJSON != "" {
+			expectedJSON = fmt.Sprintf(tampJSON, errorMsg)
+			if errorMsg != "" {
 
 				assert.JSONEq(t, expectedJSON, rec.Body.String(), fmt.Sprintf("expected JSON: %s; actual JSON: %s", expectedJSON, rec.Body.String()))
 			}
