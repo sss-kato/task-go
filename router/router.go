@@ -11,6 +11,7 @@ func NewRouter(uc controller.UserControllerIF, pc controller.ProjectControllerIF
 	e := echo.New()
 	e.POST("/signup", uc.Signup)
 	e.POST("/login", uc.Login)
+	e.POST("/logout", uc.Logout)
 
 	p := e.Group("/project")
 	p.POST("/create", pc.CreateProject)
