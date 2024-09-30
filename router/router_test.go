@@ -86,23 +86,3 @@ func TestNewRouter(t *testing.T) {
 	}
 
 }
-
-func checkPath(actcualPath string, expectedPath string, t *testing.T) {
-	if actcualPath != expectedPath {
-		t.Errorf("NewRouter().Path = %v, want %v", actcualPath, expectedPath)
-	}
-}
-
-func checkMethod(actcualMethod string, extpectedMethod string, t *testing.T) {
-
-	if actcualMethod != extpectedMethod {
-		t.Errorf("NewRouter().Method = %v, want %v", actcualMethod, extpectedMethod)
-	}
-}
-
-func checkName(actualName string, expectedName string, t *testing.T) {
-
-	if actualName != expectedName {
-		t.Errorf("NewRouter().Name = %v, want %v", actualName, expectedName)
-	}
-}
