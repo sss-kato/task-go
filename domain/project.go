@@ -34,18 +34,6 @@ func validateProjectName(pnm string) error {
 	return nil
 }
 
-// func validateUserID(uid interface{}) error {
-
-// 	kind := reflect.TypeOf(uid).Kind()
-
-// 	if kind != reflect.Int {
-
-// 		return errors.New(ErrorMsg12)
-// 	}
-
-// 	return nil
-// }
-
 func (p *project) GetProjectName() string {
 
 	return p.name
