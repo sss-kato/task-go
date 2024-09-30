@@ -15,17 +15,6 @@ func TestNewRouter(t *testing.T) {
 	userMock := controller.NewMockUserControllerIF(mockCtl)
 	prjMock := controller.NewMockProjectControllerIF(mockCtl)
 
-	// e1 := echo.New()
-	// e1.POST("/signup", userMock.Signup)
-
-	// e2 := echo.New()
-	// e2.POST("/login", userMock.Login)
-
-	// e3 := echo.New()
-	// e3.POST("/logout", userMock.Logout)
-
-	// cmp := map[string]int{"case1": 0, "case2": 1, "case3": 2, "case4": 3}
-
 	e := echo.New()
 	e.POST("/signup", userMock.Signup)
 	e.POST("/login", userMock.Login)
@@ -43,9 +32,6 @@ func TestNewRouter(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{"case1", args{userMock, prjMock}, e},
-		// {"case1", args{userMock, prjMock}, e1},
-		// {"case2", args{userMock, prjMock}, e2},
-		// {"case3", args{userMock, prjMock}, e3},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -53,28 +39,6 @@ func TestNewRouter(t *testing.T) {
 			got := NewRouter(tt.args.uc, tt.args.pc)
 
 			routes := got.Routes()
-
-			// path := routes[0].Path
-			// i := cmp[tt.name]
-			// path := routes[i].Path
-			// method := routes[i].Method
-			// name := routes[i].Name
-			// switch tt.name {
-			// case "case1":
-			// 	checkPath(path, "/signup", t)
-			// 	checkMethod(method, "POST", t)
-			// 	checkName(name, "task-go/controller.UserControllerIF.Signup-fm", t)
-
-			// case "case2":
-			// 	checkPath(path, "/login", t)
-			// 	checkMethod(method, "POST", t)
-			// 	checkName(name, "task-go/controller.UserControllerIF.Login-fm", t)
-			// case "case3":
-			// 	checkPath(path, "/logout", t)
-			// 	checkMethod(method, "POST", t)
-			// 	checkName(name, "task-go/controller.UserControllerIF.Logout-fm", t)
-			// default:
-			// }
 
 			for _, route := range routes {
 				switch route.Path {
