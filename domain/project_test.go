@@ -41,12 +41,12 @@ func TestNewProject(t *testing.T) {
 				}
 
 				if got.GetProjectName() != test_project_1.GetProjectName() {
-					t.Errorf("NewProject() got = %v, want %v", err, tt.wantErr)
+					t.Errorf("NewProject() got = %v, want %v", got.GetProjectName(), tt.want.GetProjectName())
 					return
 				}
 
 				if got.GetUserID() != test_project_1.GetUserID() {
-					t.Errorf("NewProject() got = %v, want %v", err, tt.wantErr)
+					t.Errorf("NewProject() got = %v, want %v", got.GetUserID(), tt.want.GetUserID())
 					return
 				}
 
