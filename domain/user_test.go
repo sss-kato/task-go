@@ -58,30 +58,30 @@ func TestNewUser(t *testing.T) {
 			}
 
 			if tt.name == "case1" {
-				checkTestCase1(got, tt.want, t)
+				checkUserTestCase1(got, tt.want, t)
 			}
 
 			if tt.name == "case2" {
-				checkTestCase2(err, t)
+				checkUserTestCase2(err, t)
 			}
 
 			if tt.name == "case3" {
-				checkTestCase3(err, t)
+				checkUserTestCase3(err, t)
 			}
 
 			if tt.name == "case4" {
-				checkTestCase4(err, t)
+				checkUserTestCase4(err, t)
 			}
 
 			if tt.name == "case5" {
-				checkTestCase5(err, t)
+				checkUserTestCase5(err, t)
 			}
 
 		})
 	}
 }
 
-func checkTestCase1(got UserIF, want UserIF, t *testing.T) {
+func checkUserTestCase1(got UserIF, want UserIF, t *testing.T) {
 
 	gottype := reflect.TypeOf(got)
 
@@ -107,7 +107,7 @@ func checkTestCase1(got UserIF, want UserIF, t *testing.T) {
 
 }
 
-func checkTestCase2(err error, t *testing.T) {
+func checkUserTestCase2(err error, t *testing.T) {
 	emsg := err.Error()
 
 	if emsg != ErrorMsg01 {
@@ -117,7 +117,7 @@ func checkTestCase2(err error, t *testing.T) {
 
 }
 
-func checkTestCase3(err error, t *testing.T) {
+func checkUserTestCase3(err error, t *testing.T) {
 	emsg := err.Error()
 
 	if emsg != ErrorMsg02 {
@@ -127,7 +127,7 @@ func checkTestCase3(err error, t *testing.T) {
 
 }
 
-func checkTestCase4(err error, t *testing.T) {
+func checkUserTestCase4(err error, t *testing.T) {
 	emsg := err.Error()
 
 	if emsg != ErrorMsg03 {
@@ -137,7 +137,7 @@ func checkTestCase4(err error, t *testing.T) {
 
 }
 
-func checkTestCase5(err error, t *testing.T) {
+func checkUserTestCase5(err error, t *testing.T) {
 	emsg := err.Error()
 
 	if emsg != ErrorMsg04 {

@@ -34,33 +34,39 @@ func TestNewProject(t *testing.T) {
 			}
 
 			if tt.name == "case1" {
-				gottype := reflect.TypeOf(got)
-				if !gottype.Implements(reflect.TypeOf((*ProjectIF)(nil)).Elem()) {
-					t.Errorf("%v does not implement ProjectIF", got)
-					return
-				}
-
-				if got.GetProjectName() != test_project_1.GetProjectName() {
-					t.Errorf("NewProject() got = %v, want %v", got.GetProjectName(), tt.want.GetProjectName())
-					return
-				}
-
-				if got.GetUserID() != test_project_1.GetUserID() {
-					t.Errorf("NewProject() got = %v, want %v", got.GetUserID(), tt.want.GetUserID())
-					return
-				}
-
+				checkProjectTestCase1(got, tt.want, t)
 			}
 
 			if tt.name == "case2" {
-				emsg := err.Error()
-				if emsg != ErrorMsg11 {
-					t.Errorf("Error Message got = %v, want %v", err, ErrorMsg11)
-					return
-				}
-
+				checkProjectTestCase2(err, t)
 			}
 		})
+	}
+}
+
+func checkProjectTestCase1(got ProjectIF, want ProjectIF, t *testing.T) {
+	gottype := reflect.TypeOf(got)
+	if !gottype.Implements(reflect.TypeOf((*ProjectIF)(nil)).Elem()) {
+		t.Errorf("%v does not implement ProjectIF", got)
+		return
+	}
+
+	if got.GetProjectName() != want.GetProjectName() {
+		t.Errorf("NewProject() got = %v, want %v", got.GetProjectName(), want.GetProjectName())
+		return
+	}
+
+	if got.GetUserID() != want.GetUserID() {
+		t.Errorf("NewProject() got = %v, want %v", got.GetUserID(), want.GetUserID())
+		return
+	}
+}
+
+func checkProjectTestCase2(err error, t *testing.T) {
+	emsg := err.Error()
+	if emsg != ErrorMsg11 {
+		t.Errorf("Error Message got = %v, want %v", err, ErrorMsg11)
+		return
 	}
 }
 
