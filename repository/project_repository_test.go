@@ -77,3 +77,39 @@ func Test_projectRepository_CreateProject(t *testing.T) {
 		})
 	}
 }
+
+// func Test_projectRepository_GetProjects(t *testing.T) {
+
+// 	mock1, gormDB1 := db.CreateDBMock()
+
+// 	type fields struct {
+// 		db *gorm.DB
+// 	}
+// 	type args struct {
+// 		ud dto.UserDto
+// 	}
+// 	tests := []struct {
+// 		name    string
+// 		fields  fields
+// 		args    args
+// 		want    []dto.ProjectDto
+// 		wantErr bool
+// 	}{
+// 		// TODO: Add test cases.
+// 	}
+// 	for _, tt := range tests {
+// 		t.Run(tt.name, func(t *testing.T) {
+// 			pr := &projectRepository{
+// 				db: tt.fields.db,
+// 			}
+// 			got, err := pr.GetProjects(tt.args.ud)
+// 			if (err != nil) != tt.wantErr {
+// 				t.Errorf("projectRepository.GetProjects() error = %v, wantErr %v", err, tt.wantErr)
+// 				return
+// 			}
+// 			if !reflect.DeepEqual(got, tt.want) {
+// 				t.Errorf("projectRepository.GetProjects() = %v, want %v", got, tt.want)
+// 			}
+// 		})
+// 	}
+// }

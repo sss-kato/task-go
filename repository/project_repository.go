@@ -15,7 +15,7 @@ import (
 // )
 
 type ProjectRepositoryIF interface {
-	// 	GetProjects(pd dto.ProjectDto, ud dto.UserDto) ([]dto.ProjectDto, error)
+	GetProjects(ud dto.UserDto) ([]dto.ProjectDto, error)
 	CreateProject(pd *dto.ProjectDto) error
 	// 	DeleteProject(pd dto.ProjectDto) error
 }
@@ -51,4 +51,13 @@ func (pr *projectRepository) CreateProject(pd *dto.ProjectDto) error {
 	tx.Commit()
 
 	return nil
+}
+
+func (pr *projectRepository) GetProjects(ud dto.UserDto) ([]dto.ProjectDto, error) {
+
+	//  マッピンテーブルからユーザーIDをキーにプロジェクトIDを取得
+
+	// プロジェクトテーブルからプロジェクトIDをキーにプロジェクトの情報を取得
+
+	return nil, nil
 }
