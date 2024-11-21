@@ -47,3 +47,18 @@ func (mr *MockProjectRepositoryIFMockRecorder) CreateProject(pd interface{}) *go
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateProject", reflect.TypeOf((*MockProjectRepositoryIF)(nil).CreateProject), pd)
 }
+
+// GetProjects mocks base method.
+func (m *MockProjectRepositoryIF) GetProjects(ud dto.UserDto) ([]dto.ProjectDto, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetProjects", ud)
+	ret0, _ := ret[0].([]dto.ProjectDto)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetProjects indicates an expected call of GetProjects.
+func (mr *MockProjectRepositoryIFMockRecorder) GetProjects(ud interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProjects", reflect.TypeOf((*MockProjectRepositoryIF)(nil).GetProjects), ud)
+}
