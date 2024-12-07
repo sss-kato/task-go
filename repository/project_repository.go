@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"log"
 	"task-go/dto"
 
 	"github.com/cockroachdb/errors"
@@ -55,9 +56,14 @@ func (pr *projectRepository) CreateProject(pd *dto.ProjectDto) error {
 
 func (pr *projectRepository) GetProjects(ud dto.UserDto) ([]dto.ProjectDto, error) {
 
-	//  マッピンテーブルからユーザーIDをキーにプロジェクトIDを取得
-
-	// プロジェクトテーブルからプロジェクトIDをキーにプロジェクトの情報を取得
+	pm := dto.Project_User_MappingDto{UserID: ud.ID}
+	if err := pr.db.First(&pm).Error; err != nil {
+		log.Fatal(err)
+	}
+	var projects []dto.ProjectDto
+	if err := pr.db.Model(&pm).Association("Projects").Find(&projects).Error; err != nil {
+		log.Fatal(err)
+	}
 
 	return nil, nil
 }
