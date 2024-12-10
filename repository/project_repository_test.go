@@ -80,7 +80,7 @@ func Test_projectRepository_CreateProject(t *testing.T) {
 
 // func Test_projectRepository_GetProjects(t *testing.T) {
 
-// 	mock1, gormDB1 := db.CreateDBMock()
+// 	userTest1 := dto.UserDto{ID: 1}
 
 // 	type fields struct {
 // 		db *gorm.DB
@@ -96,6 +96,7 @@ func Test_projectRepository_CreateProject(t *testing.T) {
 // 		wantErr bool
 // 	}{
 // 		// TODO: Add test cases.
+// 		{"case1", fields{db.NewDB()}, args{userTest1}, nil, false},
 // 	}
 // 	for _, tt := range tests {
 // 		t.Run(tt.name, func(t *testing.T) {
