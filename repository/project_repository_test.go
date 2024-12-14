@@ -1,6 +1,7 @@
 package repository
 
 import (
+	reflect "reflect"
 	"regexp"
 	"task-go/db"
 	"task-go/dto"
@@ -78,39 +79,39 @@ func Test_projectRepository_CreateProject(t *testing.T) {
 	}
 }
 
-// func Test_projectRepository_GetProjects(t *testing.T) {
+func Test_projectRepository_GetProjects(t *testing.T) {
 
-// 	userTest1 := dto.UserDto{ID: 1}
+	userTest1 := dto.UserDto{ID: 1}
 
-// 	type fields struct {
-// 		db *gorm.DB
-// 	}
-// 	type args struct {
-// 		ud dto.UserDto
-// 	}
-// 	tests := []struct {
-// 		name    string
-// 		fields  fields
-// 		args    args
-// 		want    []dto.ProjectDto
-// 		wantErr bool
-// 	}{
-// 		// TODO: Add test cases.
-// 		{"case1", fields{db.NewDB()}, args{userTest1}, nil, false},
-// 	}
-// 	for _, tt := range tests {
-// 		t.Run(tt.name, func(t *testing.T) {
-// 			pr := &projectRepository{
-// 				db: tt.fields.db,
-// 			}
-// 			got, err := pr.GetProjects(tt.args.ud)
-// 			if (err != nil) != tt.wantErr {
-// 				t.Errorf("projectRepository.GetProjects() error = %v, wantErr %v", err, tt.wantErr)
-// 				return
-// 			}
-// 			if !reflect.DeepEqual(got, tt.want) {
-// 				t.Errorf("projectRepository.GetProjects() = %v, want %v", got, tt.want)
-// 			}
-// 		})
-// 	}
-// }
+	type fields struct {
+		db *gorm.DB
+	}
+	type args struct {
+		ud dto.UserDto
+	}
+	tests := []struct {
+		name    string
+		fields  fields
+		args    args
+		want    []dto.ProjectDto
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+		{"case1", fields{db.NewDB()}, args{userTest1}, nil, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			pr := &projectRepository{
+				db: tt.fields.db,
+			}
+			got, err := pr.GetProjects(tt.args.ud)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("projectRepository.GetProjects() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("projectRepository.GetProjects() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

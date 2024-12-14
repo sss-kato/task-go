@@ -32,8 +32,6 @@ func (ur *userRepository) RegistUser(ud *dto.UserDto) error {
 	return nil
 }
 
-// GetUesr get user's infomation
-// return is the number of record,user id and error
 func (ur *userRepository) GetUser(user *dto.UserDto) (int, int, error) {
 
 	result := ur.db.Where("name=? AND password=?", user.Name, user.Password).First(user)

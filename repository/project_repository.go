@@ -56,21 +56,17 @@ func (pr *projectRepository) CreateProject(pd *dto.ProjectDto) error {
 
 func (pr *projectRepository) GetProjects(ud dto.UserDto) ([]dto.ProjectDto, error) {
 
-	pm := dto.Project_User_MappingDto{UserID: ud.ID}
-	if err := pr.db.First(&pm).Error; err != nil {
-		log.Fatal(err)
-	}
 	var projects []dto.ProjectDto
-	// if err1 := pr.db.Model(&pm).Association("Projects").Find(&projects).Error; err1 != nil {
-	// 	// log.Fatal(err1)
-	// }
 
-	err1 := pr.db.Table("projects").
+	if err := pr.db.Table("projects").
 		Joins("JOIN project_user_mappings ON projects.id = project_user_mappings.project_id AND  project_user_mappings.user_id = ?", ud.ID).
-		Find(&projects).Error
-	if err1 != nil {
-		log.Fatal(err1)
+		Find(&projects).Error; err != nil {
+
+		log.Fatal(err)
+
+		return nil, errors.New(err.Error())
+
 	}
 
-	return nil, nil
+	return projects, nil
 }
