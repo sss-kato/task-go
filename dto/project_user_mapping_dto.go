@@ -4,7 +4,6 @@ type Project_User_MappingDto struct {
 	ID        uint
 	ProjectID uint
 	UserID    uint
-	Projects  []ProjectDto
 }
 
 func (pumd Project_User_MappingDto) TableName() string {
